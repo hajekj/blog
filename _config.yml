@@ -111,6 +111,9 @@ defaults:
       layout: single
       author_profile: true
 
+feed:
+  path: /feed/index.xml
+
 category_archive:
   type: liquid
   path: /categories/
