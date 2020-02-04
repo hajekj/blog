@@ -1,11 +1,8 @@
 ---
-id: 606
 title: Exploring App Service Authentication on Linux
 date: 2019-01-21T09:00:43+01:00
 author: Jan Hajek
 layout: post
-guid: https://hajekj.net/?p=606
-permalink: /2019/01/21/exploring-app-service-authentication-on-linux/
 categories:
   - English
   - Microsoft
