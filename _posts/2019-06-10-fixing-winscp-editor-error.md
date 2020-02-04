@@ -1,10 +1,7 @@
 ---
-id: 1079
 title: Fixing WinSCP editor error
 date: 2019-06-10T09:00:56+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=1079
 permalink: /2019/06/10/fixing-winscp-editor-error/
 categories:
   - English
