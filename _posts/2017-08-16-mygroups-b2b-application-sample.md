@@ -1,13 +1,9 @@
 ---
-id: 505
 title: 'MyGroups: B2B application sample!'
 date: 2017-08-16T17:39:55+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=505
 permalink: /2017/08/16/mygroups-b2b-application-sample/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

@@ -1,13 +1,9 @@
 ---
-id: 664
 title: Hosting small sites in Microsoft Azure
 date: 2018-07-02T09:00:26+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=664
 permalink: /2018/07/02/hosting-small-sites-in-microsoft-azure/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

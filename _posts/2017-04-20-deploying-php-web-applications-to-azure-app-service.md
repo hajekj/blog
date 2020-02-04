@@ -1,14 +1,10 @@
 ---
-id: 261
 title: Deploying PHP web applications to Azure App Service
 date: 2017-04-20T08:45:50+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=261
 permalink: /2017/04/20/deploying-php-web-applications-to-azure-app-service/
 image: /wp-content/uploads/2017/04/php.jpg
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

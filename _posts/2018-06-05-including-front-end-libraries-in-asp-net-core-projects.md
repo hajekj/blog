@@ -1,13 +1,9 @@
 ---
-id: 639
 title: Including front-end libraries in ASP.NET Core projects
 date: 2018-06-05T09:00:05+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=639
 permalink: /2018/06/05/including-front-end-libraries-in-asp-net-core-projects/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

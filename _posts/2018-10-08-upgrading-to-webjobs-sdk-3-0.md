@@ -1,13 +1,9 @@
 ---
-id: 761
 title: Upgrading to WebJobs SDK 3.0
 date: 2018-10-08T08:00:29+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=761
 permalink: /2018/10/08/upgrading-to-webjobs-sdk-3-0/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

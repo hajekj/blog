@@ -1,13 +1,9 @@
 ---
-id: 686
 title: Working with certificates in Azure App Service
 date: 2018-07-30T09:00:34+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=686
 permalink: /2018/07/30/working-with-certificates-in-azure-app-service/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

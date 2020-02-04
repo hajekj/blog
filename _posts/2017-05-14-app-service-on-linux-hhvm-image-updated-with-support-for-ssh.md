@@ -1,13 +1,9 @@
 ---
-id: 291
 title: 'App Service on Linux &#8211; HHVM image updated with support for SSH'
 date: 2017-05-14T09:00:43+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=291
 permalink: /2017/05/14/app-service-on-linux-hhvm-image-updated-with-support-for-ssh/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

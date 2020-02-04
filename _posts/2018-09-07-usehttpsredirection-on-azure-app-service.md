@@ -1,13 +1,9 @@
 ---
-id: 736
 title: UseHttpsRedirection on Azure App Service
 date: 2018-09-07T08:00:43+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=736
 permalink: /2018/09/07/usehttpsredirection-on-azure-app-service/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

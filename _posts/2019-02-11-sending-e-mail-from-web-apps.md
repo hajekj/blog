@@ -1,13 +1,9 @@
 ---
-id: 1012
 title: Sending e-mail from Web Apps
 date: 2019-02-11T09:00:39+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=1012
 permalink: /2019/02/11/sending-e-mail-from-web-apps/
 categories:
-  - English
   - Microsoft Azure
   - Open Source
 tags:

@@ -1,13 +1,9 @@
 ---
-id: 327
 title: Deploying ASP.NET Core to App Service on Linux
 date: 2017-06-19T09:00:13+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=327
 permalink: /2017/06/19/deploying-asp-net-core-to-app-service-on-linux/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

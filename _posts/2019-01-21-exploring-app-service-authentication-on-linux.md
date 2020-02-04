@@ -3,7 +3,6 @@ title: Exploring App Service Authentication on Linux
 date: 2019-01-21T09:00:43+01:00
 author: Jan Hajek
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

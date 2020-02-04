@@ -1,13 +1,9 @@
 ---
-id: 315
 title: Local Cache with App Service on Linux
 date: 2017-06-15T09:00:42+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=315
 permalink: /2017/06/15/local-cache-with-app-service-on-linux/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

@@ -1,14 +1,10 @@
 ---
-id: 201
 title: Deploying ASP.NET Core along with a WebJob to App Service
 date: 2017-02-20T08:00:45+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=201
 permalink: /2017/02/20/deploying-asp-net-core-along-with-a-webjob-to-app-service/
 image: /wp-content/uploads/2017/02/WebJobs-1200x675.png
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

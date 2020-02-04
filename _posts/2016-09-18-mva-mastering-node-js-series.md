@@ -1,14 +1,10 @@
 ---
-id: 62
 title: 'MVA: Mastering Node.js series'
 date: 2016-09-18T12:00:54+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=62
 permalink: /2016/09/18/mva-mastering-node-js-series/
 image: /wp-content/uploads/2016/09/WintellectNodeJS-1200x675.png
 categories:
-  - English
   - Microsoft
   - Open Source
 tags:

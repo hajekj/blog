@@ -1,13 +1,9 @@
 ---
-id: 9
 title: Remotely debugging PHP on Azure Web Apps with ngrok
 date: 2016-09-06T21:32:53+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=9
 permalink: /2016/09/06/remotely-debugging-php-on-azure-web-apps-with-ngrok/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

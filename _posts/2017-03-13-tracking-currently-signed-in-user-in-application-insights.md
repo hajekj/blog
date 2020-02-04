@@ -1,13 +1,9 @@
 ---
-id: 234
 title: Tracking currently signed-in user in Application Insights
 date: 2017-03-13T07:40:33+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=234
 permalink: /2017/03/13/tracking-currently-signed-in-user-in-application-insights/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

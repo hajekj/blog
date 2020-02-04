@@ -1,14 +1,10 @@
 ---
-id: 501
 title: The dangers of too many cookies on a website
 date: 2017-10-30T09:00:24+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=501
 permalink: /2017/10/30/the-dangers-of-too-many-cookies-on-a-website/
 image: /wp-content/uploads/2017/08/cookies2.png
 categories:
-  - English
   - Open Source
 tags:
   - ASP.NET Core

@@ -1,13 +1,9 @@
 ---
-id: 46
 title: Designing web applications for geographical scale
 date: 2016-09-11T20:00:38+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=46
 permalink: /2016/09/11/designing-web-applications-for-geographical-scale/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

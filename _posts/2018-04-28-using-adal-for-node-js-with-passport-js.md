@@ -1,13 +1,9 @@
 ---
-id: 601
 title: Using ADAL for Node.js with Passport.js
 date: 2018-04-28T11:05:29+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=601
 permalink: /2018/04/28/using-adal-for-node-js-with-passport-js/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

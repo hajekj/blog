@@ -1,13 +1,9 @@
 ---
-id: 700
 title: Beware of SameSite cookie policy in ASP.NET Core and upcoming iOS 12
 date: 2018-08-31T08:00:11+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=700
 permalink: /2018/08/31/beware-of-samesite-cookie-policy-in-asp-net-core-and-upcoming-ios-12/
 categories:
-  - English
   - Microsoft
   - Open Source
 tags:

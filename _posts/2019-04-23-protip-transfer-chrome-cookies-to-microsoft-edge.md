@@ -1,13 +1,9 @@
 ---
-id: 1063
 title: 'Protip: Transfer Chrome cookies to Microsoft Edge'
 date: 2019-04-23T09:00:27+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=1063
 permalink: /2019/04/23/protip-transfer-chrome-cookies-to-microsoft-edge/
 categories:
-  - English
   - Microsoft
 tags:
   - Google Chrome

@@ -1,13 +1,9 @@
 ---
-id: 239
 title: Cookie size and cookie authentication in ASP.NET Core
 date: 2017-03-20T07:40:03+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=239
 permalink: /2017/03/20/cookie-size-and-cookie-authentication-in-asp-net-core/
 categories:
-  - English
   - Microsoft
   - Open Source
 tags:

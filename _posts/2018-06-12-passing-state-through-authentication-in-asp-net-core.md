@@ -1,13 +1,9 @@
 ---
-id: 654
 title: Passing state through authentication in ASP.NET Core
 date: 2018-06-12T09:00:14+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=654
 permalink: /2018/06/12/passing-state-through-authentication-in-asp-net-core/
 categories:
-  - English
   - Microsoft
   - Open Source
 tags:

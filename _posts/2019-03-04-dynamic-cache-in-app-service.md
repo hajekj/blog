@@ -1,13 +1,9 @@
 ---
-id: 1027
 title: Dynamic Cache in App Service
 date: 2019-03-04T09:00:16+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=1027
 permalink: /2019/03/04/dynamic-cache-in-app-service/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

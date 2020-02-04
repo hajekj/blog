@@ -1,14 +1,10 @@
 ---
-id: 119
 title: Creating a build agent and definition for PHP in VSTS﻿
 date: 2016-10-30T12:00:54+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=119
 permalink: /2016/10/30/creating-a-build-agent-and-definition-for-php-in-vsts/
 image: /wp-content/uploads/2016/10/vsts_devops_php.png
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

@@ -1,13 +1,9 @@
 ---
-id: 219
 title: Forcing reauthentication with Azure AD
 date: 2017-03-06T07:40:13+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=219
 permalink: /2017/03/06/forcing-reauthentication-with-azure-ad/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

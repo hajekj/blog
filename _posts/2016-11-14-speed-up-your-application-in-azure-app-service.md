@@ -1,13 +1,9 @@
 ---
-id: 157
 title: Speed up your application in Azure App Service
 date: 2016-11-14T12:00:31+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=157
 permalink: /2016/11/14/speed-up-your-application-in-azure-app-service/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

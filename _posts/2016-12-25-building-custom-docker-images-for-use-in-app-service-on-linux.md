@@ -1,13 +1,9 @@
 ---
-id: 187
 title: Building custom Docker images for use in App Service on Linux
 date: 2016-12-25T21:00:29+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=187
 permalink: /2016/12/25/building-custom-docker-images-for-use-in-app-service-on-linux/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

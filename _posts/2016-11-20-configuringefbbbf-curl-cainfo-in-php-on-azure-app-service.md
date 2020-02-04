@@ -1,13 +1,9 @@
 ---
-id: 178
 title: Configuring﻿ curl.cainfo in PHP on Azure App Service
 date: 2016-11-20T14:00:31+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=178
 permalink: '/2016/11/20/configuring%ef%bb%bf-curl-cainfo-in-php-on-azure-app-service/'
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

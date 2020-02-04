@@ -1,14 +1,10 @@
 ---
-id: 207
 title: To single sign out or not to?
 date: 2017-02-27T07:40:50+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=207
 permalink: /2017/02/27/to-single-sign-out-or-not-to/
 image: /wp-content/uploads/2017/02/aad_signout-1200x650.png
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

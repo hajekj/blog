@@ -1,13 +1,9 @@
 ---
-id: 614
 title: Remotely debugging PHP on App Service on Linux
 date: 2018-05-29T09:00:09+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=614
 permalink: /2018/05/29/remotely-debugging-php-on-app-service-on-linux/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

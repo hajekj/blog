@@ -1,13 +1,9 @@
 ---
-id: 570
 title: Missing claims in ASP.NET Core 2.0 OpenID Connect
 date: 2018-01-26T10:00:53+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=570
 permalink: /2018/01/26/missing-claims-in-asp-net-core-2-0-openid-connect/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

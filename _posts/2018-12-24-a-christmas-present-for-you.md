@@ -1,13 +1,9 @@
 ---
-id: 801
 title: 'A Christmas Present&#8230; for you!'
 date: 2018-12-24T08:00:24+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=801
 permalink: /2018/12/24/a-christmas-present-for-you/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

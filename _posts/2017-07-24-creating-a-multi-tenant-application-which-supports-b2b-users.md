@@ -1,14 +1,10 @@
 ---
-id: 371
 title: Creating a multi-tenant application which supports B2B users
 date: 2017-07-24T09:00:20+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=371
 permalink: /2017/07/24/creating-a-multi-tenant-application-which-supports-b2b-users/
 image: /wp-content/uploads/2017/07/aad-b2c-multitenant_1.png
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
 tags:

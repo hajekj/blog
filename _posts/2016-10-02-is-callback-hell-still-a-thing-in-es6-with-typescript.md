@@ -1,13 +1,9 @@
 ---
-id: 101
 title: Is callback hell still a thing in ES6 with TypeScript?
 date: 2016-10-02T07:40:36+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=101
 permalink: /2016/10/02/is-callback-hell-still-a-thing-in-es6-with-typescript/
 categories:
-  - English
   - Microsoft
   - Open Source
 tags:

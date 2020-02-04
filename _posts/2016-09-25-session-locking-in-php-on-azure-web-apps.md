@@ -1,13 +1,9 @@
 ---
-id: 81
 title: Session locking in PHP on Azure Web Apps
 date: 2016-09-25T12:00:14+02:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=81
 permalink: /2016/09/25/session-locking-in-php-on-azure-web-apps/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

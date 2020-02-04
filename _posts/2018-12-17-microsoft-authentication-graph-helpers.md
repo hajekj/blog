@@ -1,13 +1,9 @@
 ---
-id: 798
 title: Microsoft Authentication Graph Helpers
 date: 2018-12-17T09:00:49+01:00
 author: Jan Hajek
-layout: post
-guid: https://hajekj.net/?p=798
 permalink: /2018/12/17/microsoft-authentication-graph-helpers/
 categories:
-  - English
   - Microsoft
   - Microsoft Azure
   - Open Source

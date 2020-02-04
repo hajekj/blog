@@ -4,7 +4,6 @@ date: 2019-06-10T09:00:56+02:00
 author: Jan Hajek
 permalink: /2019/06/10/fixing-winscp-editor-error/
 categories:
-  - English
   - Open Source
   - Visual Studio Code
 tags:
