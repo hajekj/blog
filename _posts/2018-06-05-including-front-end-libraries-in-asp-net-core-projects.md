@@ -40,7 +40,14 @@ tags:
 <p>Next obvious task was to decide where the NPM packages will be stored in the project structure. The most obvious place would be in the project's root (<em>/src/WebApplication1/node_modules/</em>) but that didn't turn out that good. When you decide to use another folder for static files, everything is going to work, except&nbsp;<em><a href="https://www.softfluent.com/blog/dev/Caching-static-resources-forever-with-ASP-NET-Core">asp-append-version</a></em> tag (the tiny thingy which makes frontend asset versioning super simple), which I simply wanted there, in case somebody would update the libraries. There are some <a href="https://github.com/aspnet/Mvc/issues/7459">workarounds</a>, but those are not really ideal I would say.</p>
 
 <p>Unlike with Bower, NPM's package.json doesn't offer any option to specify, where the&nbsp;<em>node_modules</em> folder will be stored - by default and in all cases (I didn't find an option to place it elsewhere), the folder will end up in the same directory. So I put&nbsp;the&nbsp;<em>package.json</em> file into&nbsp;<em>/src/WebApplication1/wwwroot/</em> folder, gitignored the&nbsp;<em>node_modules</em> folder and added&nbsp;<em>npm install</em> into the build task:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=639-1.csproj"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-639-1-csproj">View this gist on GitHub</a></noscript></div>
+
+```xml
+<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build">
+  <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+  <Exec WorkingDirectory="wwwroot\" Command="npm install --no-audit" />
+  <Message Importance="high" Text="Done restoring dependencies using 'npm'." />
+</Target>
+```
 
 <p>On local machine, everything built correctly,&nbsp;<em>node_modules</em> downloaded, JavaScript and CSS loaded even with the versioning, the application was ready to be published into App Service (guess what, I hit another bump).</p>
 
@@ -63,12 +70,64 @@ tags:
 <ul><li>When running the&nbsp;<em>npm install</em> command, run it with&nbsp;<em>--no-audit</em> parameter - this speeds up the build process.</li><li>On local build, always run&nbsp;<em>npm install</em>. Since multiple people work on the project, it is quite important that everyone has the appropriate packages. This added a slight overhead to the build time, but if all packages are in sync with <em>package.json</em>, it takes only about 0.1 seconds to finish which is kind of unnoticable.</li></ul>
 
 <p>The modifications to the&nbsp;<em>.csproj which I am using are available below:</em></p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=639-2.csproj"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-639-2-csproj">View this gist on GitHub</a></noscript></div>
+
+```xml
+<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+  <!-- Ensure Node.js is installed -->
+  <Message Importance="high" Text="Checking Node.js presence..." />
+  <Exec Command="node --version" ContinueOnError="true">
+    <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+  </Exec>
+  <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+  <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+  <Exec WorkingDirectory="$(wwwroot)" Command="npm install --no-audit" />
+  <Message Importance="high" Text="Done restoring dependencies using 'npm'." />
+</Target>
+
+<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+  <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+  <Exec WorkingDirectory="$(wwwroot)" Command="npm install --no-audit" />
+
+  <!-- Include the newly-built files in the publish output -->
+  <ItemGroup>
+    <DistFiles Include="$(wwwroot)node_modules\**" />
+    <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <RelativePath>%(DistFiles.Identity)</RelativePath>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </ResolvedFileToPublish>
+  </ItemGroup>
+</Target>
+```
 
 <h1>The real solution</h1>
 
 <p>Just a day before this post's release, I have learned (through the GitHub issue) about a project called <a href="https://blogs.msdn.microsoft.com/webdev/2018/04/17/library-manager-client-side-content-manager-for-web-apps/">Library Manager</a>. It basically allows you to pull frontend libraries into your project - from cdnjs, local or network location. You simply specify a <em>libman.json</em> file, exclude the folder with libraries from Git and you are good to go. The build-time restore is also supported, simply by adding&nbsp;<em><a href="https://www.nuget.org/packages/Microsoft.Web.LibraryManager.Build/">Microsoft.Web.LibraryManager.Build</a>&nbsp;</em>package to your project. An example&nbsp;<em>libman.json</em> file from the project is here:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=639-3.json"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-639-3-json">View this gist on GitHub</a></noscript></div>
+
+```json
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/lib",
+  "libraries": [
+    {
+      "library": "jquery@3.2.1",
+      "destination": "wwwroot/lib/jquery"
+    },
+    {
+      "library": "twitter-bootstrap@3.3.7",
+      "destination": "wwwroot/lib/bootstrap"
+    },
+    {
+      "library": "jquery-validate@1.17.0",
+      "destination": "wwwroot/lib/jquery-validate"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.10",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive"
+    }
+  ]
+}
+```
 
 <p><strong>Update (01SEP2018):</strong> Library Manager <a href="https://blogs.msdn.microsoft.com/webdev/2018/08/31/library-manager-release-in-15-8/">is now available</a> in Visual Studio 15.8 release! There is also a handy CLI package so you can make use of it in your terminal outside Visual Studio.</p>
 

@@ -38,15 +38,13 @@ tags:
 <h2>Okay, virtual machine, which OS to choose?</h2>
 
 <p>You would be usually choosing the OS type based on the environment where the application will be running. For Azure Web Apps or Windows machine, you will want to use Windows build agent, and for target environment with Linux or <a href="https://azure.microsoft.com/en-us/documentation/articles/app-service-linux-intro/">App Service on Linux</a>&nbsp;you will want to do this on Linux. Just for explanation, I believe this is the best practice because when using for example&nbsp;Node.js packages, some of the <a href="https://azure.microsoft.com/en-us/documentation/articles/nodejs-use-node-modules-azure-apps/">native packages </a>must be compiled and you just cannot take a native package built for Linux and run it on Windows. Also, and this is probably more important, when running unit tests, you want to run them in the same setup&nbsp;environment as production.</p>
-<!-- wp:quote {"coblocks":[]} -->
 <blockquote class="wp-block-quote"><p><strong><span class="mceItemHidden"><span class="mceItemHidden"><span class="hiddenSpellError">Protip</span></span>: </span></strong>Also if you are going to use Azure Virtual Machines for your build agent, you will appreciate the ability to use <a href="https://blogs.msdn.microsoft.com/peterhauge/2016/08/14/how-to-create-a-monster-build-agent-in-azure-for-cheap/">Startup and Shutdown policies with Dev/Test labs</a> to save a money when using a monster build agent (with setup where you use periodic builds). Additionally, you could make use of Azure Functions and&nbsp;set it up so the virtual machine with build agent starts when you commit to a repo and then triggers the build task after starting.</p></blockquote>
-<!-- /wp:quote -->
 <h2>Setting it up</h2>
 
 <p>So in my case, I will be deploying my application to a Windows-based hosting (of course it is Azure App Service, but I will also show other options). So I need to setup Windows Server. I chose a VM in Azure, but it could be just anywhere, even on my PC in Hyper-V. To create a machine in Azure, you can find the tutorial <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-hero-tutorial/">here</a>&nbsp;- I chose Windows Server 2016, just for the sake that I didn't get to play with it much.</p>
 
 <p>Once my VM is up and running, you need to connect to it through the Remote Desktop and start setting up the environment:</p>
-<!-- wp:list {"ordered":true,"coblocks":[]} -->
+
 <ol><li>You may want to install PHP runtime in first place. You can achieve that using <a href="https://www.microsoft.com/web/downloads/">Web Platform Installer</a>&nbsp;or just by <a href="http://windows.php.net/download/">downloading the binaries</a>&nbsp;(or compiling your own if you are hardcore enough) and adding the folder into your PATH. I chose to install PHP 7.0 (the latest stable available atm).<br><figure><a href="/uploads/2016/10/web_platform_installer_php.png"><img class="aligncenter size-medium wp-image-122" src="/uploads/2016/10/web_platform_installer_php-300x205.png" alt="" width="300" height="205"></a></figure></li><li>Next thing you are definitely going to need is <a href="https://getcomposer.org/">Composer</a>. You can install it from the command line or using an <a href="https://getcomposer.org/Composer-Setup.exe">installer for Windows</a>&nbsp;which sets it up for you. Make sure it is available from the command line.</li><li>If you need to run tests on your code, you should also install for example <a href="https://phpunit.de/">PHPUnit</a>, it has an <a href="https://phpunit.de/manual/current/en/installation.html#installation.phar.windows">easy installation tutorial</a>.</li><li>You also need to have&nbsp;<a href="http://nodejs.org/">Node.js</a> runtime installed. This is because of two reasons: if you ever need NPM or run some Tasks for your code, it will come in handy and secondly because the VSTS build tasks are written in Node.js (cool, right?).</li><li>If you plan to deploy into Azure Web Apps, installing <a href="https://www.iis.net/downloads/microsoft/web-deploy">Web Deploy</a> might come in handy.</li><li>The last step would be to setup the build agent connection. Microsoft's docs have a great tutorial on how to do this on <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-windows">Windows</a>, <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-linux">Linux</a> and <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-osx">Mac</a>.</li></ol>
 
 <p>Upon successful configuration, the agent will appear in the Agent pools section of VSTS like so:</p>
@@ -66,7 +64,13 @@ tags:
 <p>Since there is no such thing predefined in the default steps or the marketplace, we will need to create our own script. On Windows, I really like PowerShell, so I created a new PowerShell step:</p>
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_build_task_ps.png"><img src="/uploads/2016/10/vsts_build_task_ps-292x300.png" alt="" class="wp-image-130"/></a></figure></div>
 <p>And then add the code to be executed. Make sure it is set as <strong>Inline Script</strong>, which will allow you to write it directly in the build step. The contents of the script will be like so:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=119-1.ps1"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-119-1-ps1">View this gist on GitHub</a></noscript></div>
+
+```powershell
+# You can write your powershell scripts inline here. 
+# You can also pass predefined and custom variables to this scripts using arguments
+
+composer install
+```
 
 <p>Next, you need to tweak the script settings a bit - since Composer seems to be sending debug messages to stderr (for example <a href="https://github.com/composer/composer/issues/4034">#4034</a>) and it seems to be expected behavior, you have to uncheck <strong>Fail on standard error</strong> option in the Advanced section, else your build will constantly fail. No worries, if an actual error happens, like a package fails to download, the build task will fail, because Composer will exit with an error code.</p>
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_build_task_ps_cfg.png"><img src="/uploads/2016/10/vsts_build_task_ps_cfg-300x183.png" alt="" class="wp-image-131"/></a></figure></div>
@@ -79,13 +83,57 @@ tags:
 <p>Once again, <a href="https://phpunit.de/">PHPUnit</a> doesn't have predefined&nbsp;tasks either, so we have to manually execute it using command line. I actually discovered few issues with PHPUnit's test results, but I will explain it throughout this part.</p>
 
 <p>Anyways, once again we need to create a new command line task which will be an inline script. I will paste the contents below and explain it afterwards:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=119-2.ps1"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-119-2-ps1">View this gist on GitHub</a></noscript></div>
+
+```powershell
+phpunit
+
+try {
+    $XslPatht = New-Object System.Xml.Xsl.XslCompiledTransform
+    $XslPatht.Load("Test/phpunit2junit.xsl")
+    $XslPatht.Transform("Test/Logs/junit.xml", "Test/Logs/junit-fixed.xml")
+}
+catch {
+    Write-Host $_.Exception -ForegroundColor Red
+}
+```
 
 <p>Alrighty, so first off we simply run <em>phpunit</em> command. For it to run successfully, you need to have a <em>phpunit.xml</em> definition existing in the project root. Example of such definition would be:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=119-3.xml"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-119-3-xml">View this gist on GitHub</a></noscript></div>
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.2/phpunit.xsd"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         forceCoversAnnotation="true"
+         verbose="true">
+    <logging>
+        <log type="junit" target="Test/Logs/junit.xml"/>
+    </logging>
+    <testsuite name="Sample">
+        <directory suffix="Test.php">Test</directory>
+    </testsuite>
+</phpunit>
+```
 
 <p>This is going to tell PHPUnit to run all tests within <em>Test</em> directory and store the results into <a href="http://junit.org/junit4/">JUnit</a> compatible xml file. However as it turns out, PHPUnit's JUnit compatible file isn't really JUnit compatible (funny, right?). Hence the second part of the PowerShell script, which transforms the PHPUnit generated XML into JUnit compatible XML (you can read more about it <a href="https://youtrack.jetbrains.com/issue/TW-17249">here</a> or <a href="https://cweiske.de/tagebuch/visualizing-phpunit-runs.htm">here</a>). In order to transform the PHPUnit file we need to create an <a href="https://en.wikipedia.org/wiki/XSLT">XSL Transform file</a>&nbsp;with following contents:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=119-4.xsl"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-119-4-xsl">View this gist on GitHub</a></noscript></div>
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+    <xsl:element name="testsuites">
+        <xsl:for-each select="//testsuite[@file]">
+                 <xsl:copy-of select="." />
+        </xsl:for-each>
+    </xsl:element>
+</xsl:template>
+</xsl:stylesheet>
+```
 
 <p>I chose to store it into Test folder under phpunit2junit.xsl name.</p>
 
@@ -96,11 +144,9 @@ tags:
 <h2><figure><a href="/uploads/2016/10/vsts_test_result.png"><img class="aligncenter size-medium wp-image-135" src="/uploads/2016/10/vsts_test_result-300x161.png" alt="" width="300" height="161"></a></figure>Publishing</h2>
 
 <p>The last part is to publish the project. In this case, we are going to publish the artifacts to VSTS first and then publish the project to our server.</p>
-<!-- wp:heading {"level":3,"coblocks":[]} -->
 <h3>Publishing artifacts</h3>
 
 <p>This step is optional, what it does is that it takes the built project and publishes it to VSTS or some sort of share. You would for example configure this so your built project is available from the VSTS to QA team who may want to deploy it manually or so. You would also use these to store some extra logs, screenshots or any other files in general.</p>
-<!-- wp:heading {"level":3,"coblocks":[]} -->
 <h3>Publishing to Azure Web App</h3>
 
 <p>In order to publish the project into App Service, all you have to do is to add the build task called <em>Deploy AzureRM App Service</em>, connect it to your Azure Subscription, choose the website to deploy to, optionally a deployment slot and you are good to go!</p>

@@ -28,7 +28,32 @@ tags:
 <p><a href="https://stackoverflow.com/users/325697/philippe-signoret">Philippe</a>&nbsp;found an API available and supported by Microsoft -&nbsp;<a href="https://docs.microsoft.com/en-us/rest/api/resources/tenants"><em>https://management.azure.com/tenants</em></a>, which returns the&nbsp;<em>tenantIds</em> of those, which you are member of. Unfortunately, you are unable to obtain the tenant's name like from the endpoint below, so in order to get the name you would probably have to query graph on behalf of each directory and get its name which is too complicated in my opinion.</p>
 
 <p>We are going to go with calling the Azure Portal's endpoint:&nbsp;<em>https://portal.azure.com/AzureHubs/api/tenants/List</em> - please note, like I already mentioned in the Stack Overflow's thread, it is an internal endpoint which isn't really documented or supported by Microsoft publicly, so you shouldn't use it in production applications. In order to call it, we have to authenticate (using ADAL) with Azure Service Management API (in preview) and then send HTTP POST request to the endpoint. It is then going to return data in following format:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=371-1.json"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-371-1-json">View this gist on GitHub</a></noscript></div>
+
+```json
+{
+    "failure": false,
+    "tenants": [
+        {
+            "id": "67266d43-8de7-494d-9ed8-3d1bd3b3a764",
+            "domainName": "thenetw.org",
+            "displayName": "TheNetw.org s.r.o.",
+            "isSignedInTenant": false
+        },
+        {
+            "id": "40c29545-8bca-4f51-8689-48e6819200d2",
+            "domainName": "hajekj.net",
+            "displayName": "hajekj",
+            "isSignedInTenant": true
+        },
+        {
+            "id": "8026f5b9-c636-4dc9-9ad1-bb30a080c651",
+            "domainName": "b2c.hajekj.net",
+            "displayName": "hajekj-b2c",
+            "isSignedInTenant": false
+        }
+    ]
+}
+```
 
 <p>Now once we are able to list all the tenants the user is member of, we can now easily integrate this into our application. We now would go and create a similar selector to the one in Azure Portal.</p>
 
@@ -61,15 +86,54 @@ tags:
 <h2>Redirecting to the correct tenant</h2>
 
 <p>By default, we sign in the user through the&nbsp;<em>common</em> endpoint. Later, if the user decides to switch the tenant, we call the <em>SignInAsync</em> again, but we pass in the tenant's id.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=371-2.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-371-2-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+public async Task TenantSelect(Guid id)
+{
+    var state = new Dictionary<string, string> { { "tenantId", id.ToString() } };
+    await HttpContext.Authentication.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties(state)
+    {
+        RedirectUri = Url.Action("TenantSelection", "Home")
+    }, ChallengeBehavior.Unauthorized);
+}
+```
 
 <p>After that, we catch the tenant id in the&nbsp;<em>OnRedirectToIdentityProvider</em> event and adjust the redirect URL accordingly. We also save the tenant id into the <em>state</em> which is passed along in the request, so that when the user is returned into the application. The <a href="https://github.com/aspnet/Security/blob/23da47617624cfed065cd1cdd552d34e5ea5b821/src/Microsoft.AspNetCore.Authentication.OpenIdConnect/OpenIdConnectHandler.cs#L220">state is encrypted</a> so it cannot be tampered with.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=371-3.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-371-3-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+OnRedirectToIdentityProvider = (context) =>
+{
+    string tenantId;
+context.Properties.Items.TryGetValue("tenantId", out tenantId);
+    if(tenantId != null)
+    {
+        context.ProtocolMessage.IssuerAddress = context.ProtocolMessage.IssuerAddress.Replace("common", tenantId);
+    }
+    return Task.FromResult(0);
+},
+```
 
 <h2>Accepting the response from AAD</h2>
 
 <p>Like already mentioned above, we then have to handle the token validation on our own since the application is multi-tenant. We are going to pull the tenant id from the authentication token (or&nbsp;<em>tid</em> from the&nbsp;<em>id_token</em>, upon validating its signature) and compare it the desired issuer which we saved into the&nbsp;<em>state</em>. If the state is empty, we treat it as if the user has signed in through the&nbsp;<em>common</em> endpoint, so we only validate whether the organization exists.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=371-4.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-371-4-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+OnTokenValidated = (context) =>
+{
+    string tenantId;
+context.Properties.Items.TryGetValue("tenantId", out tenantId);
+    if(tenantId != null)
+    {
+        string userTenantId = context.Ticket.Principal.FindFirst(AzureAdClaimTypes.TenantId)?.Value;
+        if (userTenantId != tenantId)
+        {
+            throw new Exception($"You signed in with wrong tenant, expected: {tenantId} but got {userTenantId}");
+        }
+    }
+    // You would validate whether the organization exists in the system etc.
+    return Task.FromResult(0);
+}
+```
 
 <h2>Beware of Token Cache</h2>
 

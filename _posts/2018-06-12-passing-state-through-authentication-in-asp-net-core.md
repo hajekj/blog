@@ -17,10 +17,22 @@ tags:
 <!--more-->
 
 <p>First, you need to add the state to the request authentication request (this also works with <em>Challenge</em> in MVC Controller):</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=654-1.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-654-1-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+HttpContext.ChallengeAsync(new AuthenticationProperties(
+    new Dictionary<string, string>() { { "Hello,", "I am state!" } },
+    new Dictionary<string, object>() { { "Hello", "I am part of query!" } })
+    {
+        RedirectUri = "/success"
+    });
+```
 
 <p>You can see we have two dictionaries in <em>AuthenticationProperties</em>. The first one, which populates&nbsp;property called&nbsp;<em>Items</em> is actual state. The second one, which is called&nbsp;<em>Parameters</em> (I am mentioning it just to clear up the confusion) is used for adding items into the query. Thanks to parameters, you can easily add&nbsp;<em>prompt</em> property to the URL or use the&nbsp;<a href="https://hajekj.net/2017/03/06/forcing-reauthentication-with-azure-ad/"><em>max_age</em></a> parameter.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=654-2.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-654-2-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+var properties = new OpenIdConnectChallengeProperties();
+properties.MaxAge = TimeSpan.FromMinutes(1); // Require the session to be no older than 60 seconds.
+```
 
 <p>Note, that there are many other <em>AuthenticationProperties</em> implementations like&nbsp;<a href="https://github.com/aspnet/Security/blob/8654efeb4da54e7f05dbce38ecdbcd8c540d8388/src/Microsoft.AspNetCore.Authentication.Google/GoogleChallengeProperties.cs"><em>GoogleChallengeProperties</em></a>,&nbsp;<a href="https://github.com/aspnet/Security/blob/8654efeb4da54e7f05dbce38ecdbcd8c540d8388/src/Microsoft.AspNetCore.Authentication.OpenIdConnect/OpenIdConnectChallengeProperties.cs"><em>OpenIdConnectChallengeProperties</em></a>&nbsp;etc. These are going to make working with the parameters on the IdP side really easy.</p>
 
@@ -29,7 +41,11 @@ tags:
 <p>Once the state gets serialized into the request it is also going to be <a href="https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction?view=aspnetcore-2.1">protected</a>&nbsp;so the server doesn't manipulate it. It also contains other properties like the <em>RedirectUri</em> for example.</p>
 
 <p>Once the user authenticates and goes back to your server, you can then access the session items really easily:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=654-3.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-654-3-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+var result = await HttpContext.AuthenticateAsync(OpenIdConnectDefaults.AuthenticationScheme);
+var value = result.Properties.Items["Hello,"];
+```
 
 <p>And there you go, you can now persist state across authentication requests.</p>
 

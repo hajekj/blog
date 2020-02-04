@@ -19,7 +19,11 @@ tags:
 <p>So what is it that you need to be able to call remote server over https://? Usually, you need a CA certificate to be able to verify the remote server's identity. In some cases, people tend to disable <em>CURLOPT_SSL_VERIFYPEER</em> option, which can be good for debug or testing, however, <strong>do not ever do this in production</strong> (unless of course, you don't give a damn about security).</p>
 
 <p>There are tutorials how to set this up (for example in <a href="https://docs.microsoft.com/en-in/azure/app-service-web/web-sites-php-configure#how-to-change-the-built-in-php-configurations">Azure docs</a>), however beware of this very bit - the path:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=178-1.ini"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-178-1-ini">View this gist on GitHub</a></noscript></div>
+
+```ini
+; Example Settings
+curl.cainfo="%ProgramFiles(x86)%\Git\bin\curl-ca-bundle.crt"
+```
 
 <p>The path is referring to the web&nbsp;instance's filesystem, based on the CURRENT image and version of Git which is installed on the instance. In short, this means that if something changes on the instance, like a new version of git is installed, where certificates get stored into <em>%ProgramFiles(x86)%\Git\usr\ssl\certs\ca-bundle.crt</em>, your application is going to stop working and you may have a hard time figuring out what is wrong.</p>
 

@@ -49,7 +49,11 @@ tags:
 <p>However, in this case, we would like to leverage the regular App Service Filesystem, so we can interact with the application using FTP. When a container is deployed, ASL mounts the equivalent of&nbsp;<em>D:\home</em> path on ASW to&nbsp;<em>/home</em> (using <a href="https://docs.docker.com/engine/tutorials/dockervolumes/">volume mount in Docker</a>). Now when that happens, it is up to your container to map the corresponding paths into the application. In order to understand how this works more closely, take a look at the <a href="https://github.com/appsvc/php/blob/master/7.0.6-apache/Dockerfile">official Dockerfile</a> used in PHP7 container on ASL.</p>
 
 <p>The important part there is following:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=187.1.Dockerfile"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-187-1.Dockerfile">View this gist on GitHub</a></noscript></div>
+
+```dockerfile
+&& ln -s /home/site/wwwroot /var/www/html \
+&& ln -s /home/LogFiles /var/log/apache2
+```
 
 <p>What these two lines actually do is that they create a symbolic link between the&nbsp;<em>/home/site/wwwroot</em> and the default Apache's <em>/var/www/html</em>&nbsp;folder. You could also take a different approach and for example specify these paths in the&nbsp;<em>apache2.conf</em> for the virtual host.</p>
 
@@ -60,20 +64,47 @@ tags:
 <p><em>On a side note, Proxygen will never be exposed directly to Internet, there is of course a loadbalancer in front of it just like with ASW, which for example handles SSL termination</em><em>.</em></p>
 
 <p>Like mentioned above in the storage part, all we have to do to make this work is to map the file system paths correctly, but unlike in the official images which using symbolic links, we are going to point directly to the mapped volume. Which means that we are not going to be changing the&nbsp;<em>Dockerfile</em> itself, but we will be changing&nbsp;<em>server.ini</em> file which serves as the configuration. After you add the correct paths to the configuration and also specify the log file, the&nbsp;<em>server.ini</em> should look like so:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=187-2.ini"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-187-2-ini">View this gist on GitHub</a></noscript></div>
+
+```ini
+; php options
+
+pid = /var/run/hhvm/pid
+
+; hhvm specific 
+
+hhvm.server.port = 80
+hhvm.server.type = proxygen 
+hhvm.server.default_document = index.php
+hhvm.server.error_document404 = index.php
+hhvm.repo.central.path = /var/run/hhvm/hhvm.hhbc
+hhvm.server.source_root = /home/site/wwwroot
+
+; default log location is stdout/err, which is good for docker
+hhvm.log.use_log_file = true
+hhvm.log.file = /home/LogFiles/hhvm.log
+```
 
 <p>You can also find full <a href="https://docs.hhvm.com/hhvm/configuration/INI-settings">INI reference here</a>&nbsp;in case you need to make more changes.</p>
 
 <h2>Building and publishing the container</h2>
 
 <p>Now all you need is to build the container and push it to to your repository, we will be using <a href="https://hub.docker.com/">Docker hub</a> for this. This is also very straightforward, so all you have to do is to first login into Docker hub:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=187-3.sh"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-187-3-sh">View this gist on GitHub</a></noscript></div>
+
+```bash
+docker login
+```
 
 <p>And then, when in the folder with your&nbsp;<em>Dockerfile</em> and&nbsp;<em>server.ini</em> you just need to execute Docker's build command:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=187-4.sh"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-187-4-sh">View this gist on GitHub</a></noscript></div>
+
+```bash
+docker build -t "hajekj/hhvm" .
+```
 
 <p>Which is going to download the dependencies and build the container image for you and then all you have to do is to publish it into the Docker hub:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=187-5.sh"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-187-5-sh">View this gist on GitHub</a></noscript></div>
+
+```bash
+docker push hajekj/hhvm
+```
 
 <p>After that, you should be able to see it online on your Docker hub's profile.</p>
 

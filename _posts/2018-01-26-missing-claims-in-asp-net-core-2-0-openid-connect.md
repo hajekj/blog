@@ -23,7 +23,15 @@ tags:
 <p>After looking through the JWT token's claims, I was sure that the issue was in the middleware itself. Going through the <a href="https://github.com/aspnet/Security/">source code on GitHub</a>, I found that some of the claims are being automatically removed including&nbsp;<em>auth_time</em>. You can see the code <a href="https://github.com/aspnet/Security/blob/dev/src/Microsoft.AspNetCore.Authentication.OpenIdConnect/OpenIdConnectOptions.cs#L58">here</a>.</p>
 
 <p>So the solution? Quite simple, in the OIDC configuration, just specify which claims you want to keep or additional claims to remove, like so:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=570-1.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-570-1-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+.AddOpenIdConnect(options =>
+{
+    ...
+    options.ClaimActions.Remove("auth_time");
+    ...
+});
+```
 
 <p>By using this method, you can include other token values which would have been otherwise omitted by the default configuration. Those include:</p>
 

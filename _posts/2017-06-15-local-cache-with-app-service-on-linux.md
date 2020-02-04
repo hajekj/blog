@@ -26,7 +26,11 @@ tags:
 <p>With that knowledge, you could simply build the image directly with the source code embedded into the container and ship the code with the container. That is the most usual approach, however, what if you want to be able to use FTP, Git publishing or CI without having the rebuild the image all over again? You would go and take the runtime image approach. With that, the process requires a very simple change in your Docker image:</p>
 
 <p>All you have to do is to add a command to the <a href="https://github.com/TheNetworg/appsvc-hhvm/blob/master/Dockerfile#L7">Dockerfile's</a>&nbsp;<a href="https://github.com/TheNetworg/appsvc-hhvm/blob/master/init_container.sh">startup script</a> which will copy the entire content of&nbsp;<em>/home/site/wwwroot/</em> to the destination folder which is located within the image itself. The command to copy the content could look like this:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=315-1.sh"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-315-1-sh">View this gist on GitHub</a></noscript></div>
+
+```bash
+cp -R /home/site/wwwroot/* /var/www/html/ # replace /var/www/html with your local folder
+```
+
 
 <p>Just like with App Service on Windows, whenever you change the content of your&nbsp;shared storage, you will have to restart the containers in order for them to fetch the new content. Such action can be very easily hooked into your Continuous Delivery process with Visual Studio Team Services for example.</p>
 
@@ -41,7 +45,13 @@ tags:
 <p>It allows you to leverage local cache and eventually perform other container modifications without modifying the image itself which gives you the opportunity to do a lot of things with the container without the knowledge of its Dockerfile and having to rebuild it (you shouldn't be doing this without knowing everything it is going to affect tho and should generally avoid this method). However it also overrites the&nbsp;<a href="https://github.com/TheNetworg/appsvc-hhvm/blob/master/Dockerfile#L17"><em>CMD</em> specified within the Dockerfile itself</a> which will in most of the cases break the Docker image.</p>
 
 <p>The way to solve this, is to create your custom startup script, for example&nbsp;<em>start.sh</em> and place it into&nbsp;the persistent file system (so either upload it through FTP or push it to your Git repo) for example to application's&nbsp;<em>/home/site</em><em>/</em> directory. The contents of the script have to include at least following:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=315-2.sh"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-315-2-sh">View this gist on GitHub</a></noscript></div>
+
+```bash
+#!/bin/bash
+mkdir /var/www
+cp -R /home/site/wwwroot/* /var/www/
+exec /bin/init_container.sh # or any other command that you overwrote from the Dockerfile with your custom script
+```
 
 <p>In first place, we create the folder with the local content - this could be already done in your image (for Apache it would be&nbsp;<em>/var/www/html/</em>), then copy the contents of the persistent file system, just like you would do in a custom Docker container and then, you would call the Docker's original&nbsp;<em>CMD</em> (or eventually include the contents of the original script directly) just to make sure that the container gets instantied correctly (so in the case of <a href="https://hajekj.net/2016/12/25/building-custom-docker-images-for-use-in-app-service-on-linux/">HHVM container</a> - <em>sshd</em> service gets started and HHVM web server is started too).</p>
 
@@ -50,6 +60,5 @@ tags:
 <h1>Summary</h1>
 
 <p>These are the two possibilities to create a Local Cache equivalent in <a href="https://docs.microsoft.com/en-us/azure/app-service/app-service-linux-readme">App Service on Linux</a>, however if you are trying to go for a Local Cache, you should definitely take the direct container approach which makes it easier and more straightforward. The second option - overriding the container's startup command/script is rather an antipattern and you should avoid it.</p>
-<!-- wp:quote {"coblocks":[]} -->
 <blockquote class="wp-block-quote"><p>Also, thanks to Nick Walker (<a href="https://twitter.com/nickwalkmsft">@nickwalkmsft</a>) for helping out with couple of issues I ran into while exploring the second option of creating a Local Cache by overriding the startup command!</p></blockquote>
 <!-- /wp:quote -->

@@ -26,14 +26,33 @@ tags:
 <p>SameSite policy is another measure at the browser's level to fight <a href="https://cs.wikipedia.org/wiki/Cross-site_request_forgery">CSRF attacks</a>. So now since we have the root cause, what can we do about it?</p>
 
 <p>In order for your ASP.NET Core 2.1 application to work with iOS 12, you need to configure&nbsp;<em>CookiePolicyOptions</em> along with the&nbsp;<em>Cookie.SameSite</em> policy as well:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=700-1.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-700-1-cs">View this gist on GitHub</a></noscript></div>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=700-2.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-700-2-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+     .AddAzureAD(options => Configuration.Bind("AzureAd", options))
+     .AddCookie(options => options.Cookie.SameSite = SameSiteMode.None);
+// ...
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+   MinimumSameSitePolicy = SameSiteMode.None
+});
+```
 
 <p>After that, your site is going to work again on iOS 12 again. I went to make some research and found out <a href="https://caniuse.com/#feat=same-site-cookie-attribute">that other major browsers implement</a> the SameSite cookie policy as well, however I couldn't reproduce the same issue there. Which made me wonder whether they are doing some sort of magic there or something is broken in iOS 12 so I went ahead and <a href="https://bugs.webkit.org/show_bug.cgi?id=188165">submitted a bug report to WebKit</a>. After couple of hours of waiting, Apple engineers reachead out and I provided them with credentials to reproduce the issue.</p>
 
 <p>So far, I haven't heard back from them yet, however this issue is still present in iOS 12 Developer Preview 11 as of now. I am going to update this post if new info becomes available.</p>
 
 <p><strong>Update 28SEP2018:</strong><br>You can alternatively set the response mode to send the response in the query instead of the post body like so:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=700-3.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-700-3-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+.AddOpenIdConnect("AzureAD", options => {
+    ...
+    // Set response type to code and response type to query
+    // to avoid the default response_mode=form_post
+    // which causes issues with WebKit's handling of samesite=lax for the session cookie
+    options.ResponseType = OpenIdConnectResponseType.Code;
+    options.ResponseMode = OpenIdConnectResponseMode.Query;
+};
+```
 
 <p>Just beware that with this solution you won't receive the user's id_token directly and if you are using ADAL to redeem the authorization code for tokens, you might run into issues.</p>

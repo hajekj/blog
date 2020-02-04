@@ -48,13 +48,46 @@ tags:
 <h2>Forcing authentication</h2>
 
 <p>First, you are going to have to modify the&nbsp;<em>OpenIdConnectEvents</em> in order to be able to redirect the user to the correct URL. This is done by modifying context of&nbsp;<em>OnRedirectToIdentityProvider</em>:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=219-1.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-219-1-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+// ...
+OnRedirectToIdentityProvider = context =>
+{
+    if (context.ShouldReauthenticate())
+    {
+        context.ProtocolMessage.MaxAge = "0"; // <time since last authentication or 0>;
+    }
+    return Task.FromResult(0);
+},
+// ...
+```
 
 <p><em>ShouldReauthenticate</em> is an extension method of <em>RedirectContext</em>, which decides (based on current state, which we will set later) whether the user should reauthenticate or not:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=219-2.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-219-2-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+internal static bool ShouldReauthenticate(this RedirectContext context)
+{
+    context.Properties.Items.TryGetValue("reauthenticate", out string reauthenticate);
+
+    bool shouldReauthenticate = false;
+    if (reauthenticate != null && !bool.TryParse(reauthenticate, out shouldReauthenticate))
+    {
+        throw new InvalidOperationException($"'{reauthenticate}' is an invalid boolean value");
+    }
+
+    return shouldReauthenticate;
+}
+```
 
 <p>Next, you can test this by calling&nbsp;<em>ChallengeAsync</em> in your controller. Before that, you have to pass it a state information for the user to be reathenticated.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=219-3.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-219-3-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+var state = new Dictionary<string, string> { { "reauthenticate", "true" } };
+await HttpContext.Authentication.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties(state)
+{
+    RedirectUri = "/sensitivePage"
+}, ChallengeBehavior.Unauthorized);
+```
 
 <p><em>Note that we are also passing ChallengeBehavior.Unauthorized</em><em> there, which results in the request not failing with Forbidden, but allows it to proceed (this took me a while to figure out, solution found on <a href="https://github.com/aspnet/Security/issues/912">GitHub</a>).</em></p>
 
@@ -63,7 +96,34 @@ tags:
 <h2>id_token validation</h2>
 
 <p>We are going to validate the id_token's <em>auth_time</em> claim&nbsp;within the specific controller, which in my opinion makes the most sense. We are going to achieve that by implementing&nbsp;<em>Attribute</em> and&nbsp;<em>IResourceFilter</em>, to create our own attribute filter.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=219-4.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-219-4-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+public class RequireReauthenticationAttribute : Attribute, IAsyncResourceFilter
+{
+    private int _timeElapsedSinceLast;
+    public RequireReauthenticationAttribute(int timeElapsedSinceLast)
+    {
+        _timeElapsedSinceLast = timeElapsedSinceLast;
+    }
+    public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
+    {
+        var foundAuthTime = int.TryParse(context.HttpContext.User.FindFirst(AppClaimTypes.AuthTime)?.Value, out int authTime);
+
+        if (foundAuthTime && DateTime.UtcNow.ToUnixTimestamp() - authTime < _timeElapsedSinceLast)
+        {
+            await next();
+        }
+        else
+        {
+            var state = new Dictionary<string, string> { { "reauthenticate", "true" } };
+            await context.HttpContext.Authentication.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties(state)
+            {
+                RedirectUri = context.HttpContext.Request.Path
+            }, ChallengeBehavior.Unauthorized);
+        }
+    }
+}
+```
 
 <p>So now we can is it in our controller as easy as putting&nbsp;<em>[RequireReauthentication(&lt;maximum time elapsed since last authentication&gt;)]</em> above a method or entire controller class.</p>
 
@@ -76,4 +136,7 @@ tags:
 <p>Just additional update: When you want to require the user to use MFA for login session, you can modify the code above and instead of checking the authentication time you will be check for authentication method reference in the token. If it contains&nbsp;<em>mfa</em> it means that user has used Multi Factor Authentication for this session, additionally if it contains&nbsp;<em>pwd</em> it also means the user authenticated using their password.</p>
 
 <p>In order to force MFA to be used, you have to append&nbsp;<em>amr_values=mfa</em> to the authorization URL for the user. To do this with OpenIdConnectMiddleware in ASP.NET Core, you have to do following in place for setting <em>MaxAuth</em>:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=219-5.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-219-5-cs">View this gist on GitHub</a></noscript></div>
+
+```csharp
+context.ProtocolMessage.SetParameter("amr_values", "mfa");
+```

@@ -23,9 +23,7 @@ tags:
 <p>We had the application tested localy with a connection string refering to a certificate within application's storage (<em>D:\home\site\certs\connection.pfx</em>). As soon as we hit the application's endpoint, we received following error:</p>
 
 
-<!-- wp:preformatted -->
 <pre class="lang:default highlight:0 decode:true wp-block-preformatted">Win32Exception: The credentials supplied to the package were not recognized</pre>
-<!-- /wp:preformatted -->
 
 
 <p>We were trying to figure out what is going on, even the <a href="https://docs.microsoft.com/en-us/azure/app-service/app-service-web-ssl-cert-load#alternative-load-certificate-as-a-file">official docs</a> didn't get us any further. Than my collegue tried to upload the certificate to App Service and load it with the <em>WEBSITE_LOAD_CERTIFICATES</em> option. Suddenly, everything started to work, however it was really weird since we were still using the PFX file directly, not the certificate from the certificate store.</p>

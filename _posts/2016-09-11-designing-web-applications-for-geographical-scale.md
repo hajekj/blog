@@ -42,10 +42,14 @@ tags:
 <p>The first issue you are going to notice is that the replication between master and slave nodes is asynchronous, which means that whenever you perform a write operation (on the master) the result will not be visible on the slave node immediately. This can be okay if you are writing some background data which are not required to be available to the current user immediately (saving data for background job, statistics etc.), however it may become an obstacle when needing to access the data directly after the write operation. The asynchronous write operation takes from about a half second to two seconds.</p>
 
 <p>Luckily, the wonderful Azure SQL has a solution if you need the data available for read on the slave (or all of the slaves) right after the write operation (perform a sort of synchronous write) – you can execute this system call: <strong>sp_wait_for_database_copy_sync</strong> (see an example for how to use it). This will make sure that the write operation you made is going to be finished only once it has been propagated to the specific slave database as specified.</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=46-1.sql"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-46-1-sql">View this gist on GitHub</a></noscript></div>
+
+```sql
+INSERT INTO table (ID, Value) VALUES (1, "VALUE");
+USE database;
+EXEC sys.sp_wait_for_database_copy_sync @target_server = 'server_hostname', @target_database = 'database';
+```
 
 <p>You can find out more about this in <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-database-geo-replication-overview/#preventing-the-loss-of-critical-data">Azure documentation</a>.</p>
-<!-- wp:heading {"level":3,"coblocks":[]} -->
 <h3>WordPress</h3>
 
 <p>Of course you are going to ask – how can I leverage the active geo-replication within my existing application, ie. WordPress/Project Nami? In the WordPress world, there is a plugin for almost everything! You can make use of HyperDB (<a href="https://wordpress.org/plugins/hyperdb/"><u>https://wordpress.org/plugins/hyperdb/</u></a>) plugin and setup the master – slave database connections very easily!</p>

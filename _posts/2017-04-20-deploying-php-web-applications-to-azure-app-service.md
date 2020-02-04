@@ -31,7 +31,6 @@ tags:
 <p>The extension itself is very easy to deploy, you simply add it from the Azure Portal. After that, whenever you push new code to the repository and deployment is started, it is going to download the packages as part of the deployment, additionally&nbsp;<em>composer</em>&nbsp;executable will be added to the PATH so it can be very easily called from the Command Line or PowerShell in Kudu.</p>
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/04/composer_extension.png"><img src="/uploads/2017/04/composer_extension-300x290.png" alt="" class="wp-image-282"/></a></figure></div>
 <p>The great thing about the extension is that it is open source and available <a href="https://github.com/SyntaxC4-MSFT/ComposerExtension">on GitHub</a>, so you can see exactly what is it doing on the background.</p>
-<!-- wp:heading {"level":3,"coblocks":[]} -->
 <h3>FYI: How the extension works</h3>
 
 <p>The extension basically downloads latest Composer, automatically forces its own <a href="https://github.com/SyntaxC4-MSFT/ComposerExtension/blob/master/Content/Hooks/deploy.cmd">deployment script</a>&nbsp;which handles the installation and additionally, it transforms the PATH using <a href="https://github.com/SyntaxC4-MSFT/ComposerExtension/blob/master/Content/applicationHost.xdt"><em>applicationHost.xdt</em></a> to contain the executable so Composer can be called directly from Command Line or PowerShell in Kudu.</p>
@@ -45,10 +44,27 @@ tags:
 <p>With this script, you can do additional modifications like run&nbsp;Bower or NPM directly in the Batch scripts, so you have a little bit more control over the build process.</p>
 
 <p>The most important part of the deployment script is:</p>
-<div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=261-1.bat"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-261-1-bat">View this gist on GitHub</a></noscript></div>
-<!-- wp:quote {"coblocks":[]} -->
+
+```bat
+:: 1. Composer.phar
+IF EXIST "%DEPLOYMENT_SOURCE%\composer.json" (
+  cd %DEPLOYMENT_SOURCE%
+
+  IF NOT EXIST "%DEPLOYMENT_SOURCE%\composer.phar" (
+    echo Composer.phar not found. Downloading...
+    call curl -s https://getcomposer.org/installer | php
+    IF !ERRORLEVEL! NEQ 0 goto error
+  ) ELSE (
+      echo Attempting to update composer.phar
+      php composer.phar self-update
+  )
+  
+  call php composer.phar install --no-dev
+  IF !ERRORLEVEL! NEQ 0 goto error
+)
+```
+
 <blockquote class="wp-block-quote"><p>Just like .csproj with C#, Composer allows to execute custom scripts or commands on certain events (<a href="https://getcomposer.org/doc/articles/scripts.md">more info</a>). This allows you to fully integrate tasks like NPM, Bower install, Gulp tasks and so on directly into the composer.json file, so it is ran whenever composer install is executed. This is similar way how .NET Core and especially ASP.NET Core handles such things (more <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj#scripts">here</a>).</p></blockquote>
-<!-- /wp:quote -->
 <h1>App Service on Linux</h1>
 
 <p>I have already blogged about App Service on Linux <a href="https://hajekj.net/2016/12/25/building-custom-docker-images-for-use-in-app-service-on-linux/">multiple times</a>, now we are going to focus on deploying a PHP application there. Again, just like with App Service on Windows, there are multiple ways to achieve the deployment.</p>

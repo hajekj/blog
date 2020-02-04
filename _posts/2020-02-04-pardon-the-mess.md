@@ -20,4 +20,6 @@ Some technical reasoning is - due to some unknown reasons, the underlying databa
 
 I will be actually doing the same for [NETWORG's blog](https://blog.thenetw.org) in near future. However, I have to also express my gratitude to the great WordPress community and WordPress on its own, which is constantly amazing me. If you want to hear some cool stories I suggest that you read this book - [The Year Without Pants](https://scottberkun.com/yearwithoutpants/).
 
+Also, I will be enabling comments on the blog shortly again.
+
 I originally wanted to flatten the initial changes I was making to the posts, but decided to keep them in the history, in case something got lost. You can find the source of this blog [here](https://github.com/hajekj/hajekj.github.io).
