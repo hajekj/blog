@@ -58,7 +58,7 @@ plugins:
 author:
   name   : "Jan Hajek"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio    : "I am Honza, hi."
   links:
     - label: "Blog"
       icon: "fas fa-fw fa-link"

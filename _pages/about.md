@@ -1,6 +1,6 @@
 ---
-permalink: /about/
-title: "About"
+permalink: /about-me/
+title: "About Me"
 ---
 
 I am Jan, hi. People also call me Honza , "Haichi" (ハイチー) or HH ("double-H") and I am also known as [Honza Noyes](https://my.secondlife.com/honza.noyes) in Second Life.
