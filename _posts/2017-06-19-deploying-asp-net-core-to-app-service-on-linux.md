@@ -34,6 +34,5 @@ format: aside
 <p>And last, but not least, you can build the source code somewhere else, like in Visual Studio Team Services, and then just publish it to he App Service on Linux.</p>
 
 <p>Additionally, it is quite important to mention, that you will need to set the startup command for the container in order for the application to start successfully, else it is going to <a href="https://github.com/Azure-App-Service/dotnetcore/blob/master/1.1/init_container.sh#L13">attempt searching for&nbsp;<em>.csproj</em> in the root</a>, which it won't be able to find and therefore the container will keep crashing (you will see it in the logs). The startup command will look like this:&nbsp;<em>dotnet /home/site/wwwroot/WebApplication1.dll</em></p>
-<!-- wp:image {"id":359,"coblocks":[]} -->
 <figure class="wp-block-image"><img src="/uploads/2017/06/startupcommand_dotnetcore.png" alt="startupcommand_dotnetcore" class="wp-image-359"/></figure>
 <!-- /wp:image -->

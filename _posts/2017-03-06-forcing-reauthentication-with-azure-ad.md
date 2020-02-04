@@ -30,9 +30,7 @@ tags:
 <h1>Doing it the right way...</h1>
 
 <p>So after few desperate Google searches, I took a look into the <a href="http://openid.net/specs/openid-connect-core-1_0.html">OIDC RFC</a>&nbsp;and found out, that you can append&nbsp;<em>max_age=&lt;time since password was last entered&gt;</em> to the authorization URL (or just put 0 to force password authentication at all times). So once user gets redirected to the URL, they will be presented with an information to login again:</p>
-<!-- wp:image {"id":221,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/02/max_age.png"><img src="/uploads/2017/02/max_age-285x300.png" alt="" class="wp-image-221"/></a></figure></div>
-<!-- /wp:image -->
 <p>Now this looked better then just the screen with&nbsp;<em>prompt=login</em> which shown plain login screen without account selection and information about what happened which is quite important from the user prospective.</p>
 
 <p>But this was just cosmetic, does it let us distinguish the situation on the backend?&nbsp;Yes! When the user is returned after authentication to your application, the&nbsp;<em>id_token</em> is going to contain a claim called&nbsp;<em>auth_time</em>. This claim holds the Unix timestamp of when the user entered the password last. The last thing to do was to validate this information.</p>

@@ -32,6 +32,5 @@ tags:
 <p>Quite simple and powerful.</p>
 
 <p>Alternatively, you can also make use of App Service's newly introduced&nbsp;<em>HTTPS Only</em> feature which will result in HTTPS redirect on the server level rather than the application one - it is easier than most of the solution above and works just by flipping a switch - however you have to keep on mind to flip it on with all new deployments and it makes the application slightly more platform dependent.</p>
-<!-- wp:image {"id":745,"coblocks":[]} -->
 <figure class="wp-block-image"><img src="/uploads/2018/09/AppService-HTTPS-Configuration.png" alt="" class="wp-image-745"/></figure>
 <!-- /wp:image -->

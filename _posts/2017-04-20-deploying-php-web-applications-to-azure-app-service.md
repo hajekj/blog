@@ -29,9 +29,7 @@ tags:
 <h2>Composer extension</h2>
 
 <p>The extension itself is very easy to deploy, you simply add it from the Azure Portal. After that, whenever you push new code to the repository and deployment is started, it is going to download the packages as part of the deployment, additionally&nbsp;<em>composer</em>&nbsp;executable will be added to the PATH so it can be very easily called from the Command Line or PowerShell in Kudu.</p>
-<!-- wp:image {"id":282,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/04/composer_extension.png"><img src="/uploads/2017/04/composer_extension-300x290.png" alt="" class="wp-image-282"/></a></figure></div>
-<!-- /wp:image -->
 <p>The great thing about the extension is that it is open source and available <a href="https://github.com/SyntaxC4-MSFT/ComposerExtension">on GitHub</a>, so you can see exactly what is it doing on the background.</p>
 <!-- wp:heading {"level":3,"coblocks":[]} -->
 <h3>FYI: How the extension works</h3>

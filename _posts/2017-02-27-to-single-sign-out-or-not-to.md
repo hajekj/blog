@@ -37,9 +37,7 @@ tags:
 <p>This is the very basic method of single sign out - user signed out from both your application and the IdP. This however doesn't get the user signed out from other 3rd party applications.</p>
 
 <p>One of the nice examples of how SLO should be done is Visual Studio Team Services logout page, which logs you out from all possible instances:</p>
-<!-- wp:image {"id":210,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/02/vsts_slo.png"><img src="/uploads/2017/02/vsts_slo-300x163.png" alt="" class="wp-image-210"/></a></figure></div>
-<!-- /wp:image -->
 <p>This is achieved through something called front-channel SLO (I will write about it later).</p>
 
 <p>Honorable mention for SLO implementation is SAML protocol, where for example Azure AD event <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-single-sign-out-protocol-reference">implements the support as well</a>. However, I don't want to spend much time with SAML and we will focus on modern authentication protocols - especially OpenID Connect, because that's where all the action's gonna be.</p>

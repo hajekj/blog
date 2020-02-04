@@ -86,13 +86,9 @@ tags:
 <p>So now with the image published we can now create a website and use our custom image in it!</p>
 
 <p>The process is very simple - in Azure Portal you <a href="https://ms.portal.azure.com/#create/Microsoft.AppSvcLinux">create a new resource - Web App on Linux</a>&nbsp;and specify the image name you published to Docker Hub like so:</p>
-<!-- wp:image {"id":198,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/12/appsvc-hhvm2.png"><img src="/uploads/2016/12/appsvc-hhvm2-300x295.png" alt="" class="wp-image-198"/></a></figure></div>
-<!-- /wp:image -->
 <p>After waiting a minute or so for the resource deployment, you can go ahead and create an&nbsp;<em>index.php</em> in the site's FTP directory (or publish to it from Git) and with just a simple use of&nbsp;<em>&lt;?php phpinfo(); ?&gt;</em> you will be able to see that we have the HHVM up and running on App Service on Linux!</p>
-<!-- wp:image {"id":197,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/12/appsvc-hhvm.png"><img src="/uploads/2016/12/appsvc-hhvm-300x181.png" alt="" class="wp-image-197"/></a></figure></div>
-<!-- /wp:image -->
 <h2>Lifecycle</h2>
 
 <p>Regarding container lifecycle, especially updates - whenever you need to update the image (assuming you are using the&nbsp;<em>latest</em> version), you are going to have to restart the site for it to fetch the new version of the image. In case of you needing to change the image completely or changing the version, you would change it first in the&nbsp;<span style="text-decoration: underline;">Docker tab</span> and then restart the site as well.</p>

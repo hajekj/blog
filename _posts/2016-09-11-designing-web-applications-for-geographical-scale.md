@@ -24,9 +24,7 @@ tags:
 <p>You can leverage the geographical distribution in cases of high-availability solution or delivering the application around the globe making use of the Azure regions available to you.</p>
 
 <p>With Azure App Service it is very simple to geographically scale your applications. You can create an App Service Plan in each region, create a Web App in each Service Plan and connect it to the Source Control (while leveraging Web Hooks for Continuous Integration), which will insure that all regions are running the latest code of your application and place a Traffic Manager in front of all the Web App instances across the regions. If you are using the Premium App Service plan, you could also use the Clone option instead.</p>
-<!-- wp:image {"id":47,"align":"center","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/09/trafficmanager.png"><img src="/uploads/2016/09/trafficmanager-300x231.png" alt="Leveraging Traffic Manager with Performance routing." class="wp-image-47"/></a><figcaption>Leveraging Traffic Manager with Performance routing.</figcaption></figure></div>
-<!-- /wp:image -->
 <p><strong>Update (18SEP2016):</strong> Additionally, one day ago, I stumbled upon a great video explaining the whole setup for geographically scaling your application with <a href="https://channel9.msdn.com/Shows/Cloud+Cover/Episode-213-Azure-App-Service-Best-Practices-for-Large-Scale-Applications">Azure Web Apps on Channel9</a>:</p>
 
 <p><a href="https://channel9.msdn.com/Shows/Cloud+Cover/Episode-213-Azure-App-Service-Best-Practices-for-Large-Scale-Applications">https://channel9.msdn.com/Shows/Cloud+Cover/Episode-213-Azure-App-Service-Best-Practices-for-Large-Scale-Applications</a></p>

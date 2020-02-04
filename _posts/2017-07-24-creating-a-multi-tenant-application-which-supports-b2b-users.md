@@ -49,9 +49,7 @@ tags:
 <h2>Registering the application</h2>
 
 <p>The very first thing which you need to do is <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications#adding-an-application">register the application with Azure Active Directory</a>. After that, you need to assign it permissions - for this specific sample, you need to assign permissions for&nbsp;<em>Windows Azure Service Management API</em>&nbsp;and also&nbsp;<em>Microsoft Graph</em> (sign in and view user's profile, read all user's basic profiles).</p>
-<!-- wp:image {"id":496,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/07/aad-b2c-multitenant_2.png"><img src="/uploads/2017/07/aad-b2c-multitenant_2-300x102.png" alt="" class="wp-image-496"/></a></figure></div>
-<!-- /wp:image -->
 <p>Little bit more detailed information about registering the application is available in <a href="https://github.com/hajekj/aad-b2b-multitenant/blob/master/README.md">README of the project</a>.</p>
 
 <h2>Listing user's tenants</h2>
@@ -59,9 +57,7 @@ tags:
 <p>After we sign the user in, we need to obtain a token for the Azure Service Management API and query it for the tenant information, we parse the JSON returned into a model and then list all the available tenants. A note here - you should only display the tenants which have provisioned your application and granted the consent, otherwise the user will face errors during the sign-in, since the application is not going to be in the directory.</p>
 
 <p>Code for obtaining the tenant list is <a href="https://github.com/hajekj/aad-b2b-multitenant/blob/master/aad-b2b-multitenant/Helpers/AzureServiceManagement.cs#L30">here</a>, I don't think it requires any comments.</p>
-<!-- wp:image {"id":487,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2017/07/aad-b2c-multitenant_1.png"><img src="/uploads/2017/07/aad-b2c-multitenant_1-300x142.png" alt="" class="wp-image-487"/></a></figure></div>
-<!-- /wp:image -->
 <h2>Redirecting to the correct tenant</h2>
 
 <p>By default, we sign in the user through the&nbsp;<em>common</em> endpoint. Later, if the user decides to switch the tenant, we call the <em>SignInAsync</em> again, but we pass in the tenant's id.</p>

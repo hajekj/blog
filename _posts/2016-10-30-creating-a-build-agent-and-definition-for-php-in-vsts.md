@@ -50,13 +50,9 @@ tags:
 <ol><li>You may want to install PHP runtime in first place. You can achieve that using <a href="https://www.microsoft.com/web/downloads/">Web Platform Installer</a>&nbsp;or just by <a href="http://windows.php.net/download/">downloading the binaries</a>&nbsp;(or compiling your own if you are hardcore enough) and adding the folder into your PATH. I chose to install PHP 7.0 (the latest stable available atm).<br><figure><a href="/uploads/2016/10/web_platform_installer_php.png"><img class="aligncenter size-medium wp-image-122" src="/uploads/2016/10/web_platform_installer_php-300x205.png" alt="" width="300" height="205"></a></figure></li><li>Next thing you are definitely going to need is <a href="https://getcomposer.org/">Composer</a>. You can install it from the command line or using an <a href="https://getcomposer.org/Composer-Setup.exe">installer for Windows</a>&nbsp;which sets it up for you. Make sure it is available from the command line.</li><li>If you need to run tests on your code, you should also install for example <a href="https://phpunit.de/">PHPUnit</a>, it has an <a href="https://phpunit.de/manual/current/en/installation.html#installation.phar.windows">easy installation tutorial</a>.</li><li>You also need to have&nbsp;<a href="http://nodejs.org/">Node.js</a> runtime installed. This is because of two reasons: if you ever need NPM or run some Tasks for your code, it will come in handy and secondly because the VSTS build tasks are written in Node.js (cool, right?).</li><li>If you plan to deploy into Azure Web Apps, installing <a href="https://www.iis.net/downloads/microsoft/web-deploy">Web Deploy</a> might come in handy.</li><li>The last step would be to setup the build agent connection. Microsoft's docs have a great tutorial on how to do this on <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-windows">Windows</a>, <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-linux">Linux</a> and <a href="https://www.visualstudio.com/en-us/docs/build/admin/agents/v2-osx">Mac</a>.</li></ol>
 
 <p>Upon successful configuration, the agent will appear in the Agent pools section of VSTS like so:</p>
-<!-- wp:image {"id":123,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_agent.png"><img src="/uploads/2016/10/vsts_agent-300x163.png" alt="" class="wp-image-123"/></a></figure></div>
-<!-- /wp:image -->
 <p>Since the VSTS agent doesn't automatically detect PHP and Composer, it is also useful to add it into <a href="https://www.visualstudio.com/en-us/docs/release/getting-started/configure-agents#agent-capabilities">capabilities</a>, so if you have multiple build agents, in a pool, it will be easier to run the build task only on a pool of agents which have PHP and Composer or PHP7 etc.</p>
-<!-- wp:image {"id":124,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_agent_capabilities.png"><img src="/uploads/2016/10/vsts_agent_capabilities-300x82.png" alt="" class="wp-image-124"/></a></figure></div>
-<!-- /wp:image -->
 <p>So now we have the build agent setup, lets move onto creating the Build Definition.</p>
 
 <h1>Build Definition</h1>
@@ -68,16 +64,12 @@ tags:
 <h2>Composer</h2>
 
 <p>Since there is no such thing predefined in the default steps or the marketplace, we will need to create our own script. On Windows, I really like PowerShell, so I created a new PowerShell step:</p>
-<!-- wp:image {"id":130,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_build_task_ps.png"><img src="/uploads/2016/10/vsts_build_task_ps-292x300.png" alt="" class="wp-image-130"/></a></figure></div>
-<!-- /wp:image -->
 <p>And then add the code to be executed. Make sure it is set as <strong>Inline Script</strong>, which will allow you to write it directly in the build step. The contents of the script will be like so:</p>
 <div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=119-1.ps1"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-119-1-ps1">View this gist on GitHub</a></noscript></div>
 
 <p>Next, you need to tweak the script settings a bit - since Composer seems to be sending debug messages to stderr (for example <a href="https://github.com/composer/composer/issues/4034">#4034</a>) and it seems to be expected behavior, you have to uncheck <strong>Fail on standard error</strong> option in the Advanced section, else your build will constantly fail. No worries, if an actual error happens, like a package fails to download, the build task will fail, because Composer will exit with an error code.</p>
-<!-- wp:image {"id":131,"align":"center","linkDestination":"custom","coblocks":[]} -->
 <div class="wp-block-image"><figure class="aligncenter"><a href="/uploads/2016/10/vsts_build_task_ps_cfg.png"><img src="/uploads/2016/10/vsts_build_task_ps_cfg-300x183.png" alt="" class="wp-image-131"/></a></figure></div>
-<!-- /wp:image -->
 <p>Now the project will contain the packages from Composer, we could do similar for <a href="https://www.visualstudio.com/en-us/docs/build/steps/package/npm-install">fetching NPM packages</a> or running <a href="https://www.visualstudio.com/en-us/docs/build/steps/build/grunt">Grunt</a> tasks with the difference that these tasks are already created and you don't have to execute them manually.</p>
 
 <p>Next up, running tests.</p>

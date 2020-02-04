@@ -23,9 +23,7 @@ tags:
 <p>However, you can notice few things, which I would say should not made it into the sample:</p>
 
 <p>First off, the <em>Envionment</em>&nbsp;is configured statically by&nbsp;<em>UseEnvironment</em>&nbsp;- which I really don't like. In ASP.NET Core, you can configure Environment by&nbsp;<em>ASPNETCORE_ENVIRONMENT</em> env variable, here this one won't work. Since ASP.NET Core uses <em>WebHostBuilder</em> and WebJobs use&nbsp;the <em>HostBuilder</em>, there are few differences: In order to specify environment, you need to use&nbsp;<a href="https://github.com/aspnet/Hosting/blob/f9d145887773e0c650e66165e0c61886153bcc0b/src/Microsoft.Extensions.Hosting.Abstractions/HostDefaults.cs#L19"><em>environment</em></a> variable name, just like that.</p>
-<!-- wp:image {"id":765} -->
 <figure class="wp-block-image"><img src="/uploads/2018/10/webjobs-enviornment.png" alt="" class="wp-image-765"/><figcaption>You can setup the environment variable in the Debug options of your project just like with ASP.NET Core.</figcaption></figure>
-<!-- /wp:image -->
 <p>Next, I really like the concept of <a href="https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.1&amp;tabs=windows">User Secrets in ASP.NET Core</a> for development, so why not use those here too? In order to do that, you will need to make two modifications. First, setup the UserSecretsId assembly attribute on the&nbsp;<em>Program</em>&nbsp;class:</p>
 <div class="wp-block-coblocks-gist"><script src="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451.js?file=761-1.cs"></script><noscript><a href="https://gist.github.com/hajekj/17ab3a7a18b1ad545ff000252dc35451#file-761-1-cs">View this gist on GitHub</a></noscript></div>
 
