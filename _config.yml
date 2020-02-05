@@ -134,3 +134,9 @@ comments:
   staticman:
     branch: "master"
     endpoint: https://api.staticman.net/v3/entry/github/
+
+reCaptcha:
+  siteKey: "6LdM7tUUAAAAABP8GmNow9bXjrfF2GUdm1xBSFzK"
+  # Encrypt reCaptcha secret key using Staticman /encrypt endpoint
+  # For more information, https://staticman.net/docs/encryption
+  secret: "ij4Na20bUQYwEj8x+b06ggt63soKTjzemqfE+OerIyEmmF3KjEbvwV7bz37uhVNpu1+YHVHzt/eAJfvSWsANVMU2cP5uaoYAf3kgY63eNu4n211cmOAeVdSvL0gIPzVx+3h5HMKG9YPuvaPckCAgEQDVtPs3Uva+114WYcncc6k="
