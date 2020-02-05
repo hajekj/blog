@@ -126,3 +126,11 @@ analytics:
   google:
     tracking_id: "UA-157769647-1"
     anonymize_ip: false # default
+
+
+repository: hajekj/hajekj.github.io # Git username/repo-name e.g. "mmistakes/minimal-mistakes"
+comments:
+  provider: "staticman_v2"
+  staticman:
+    branch: "master"
+    endpoint: https://api.staticman.net/v3/entry/github/
