@@ -1,0 +1,7 @@
+_id: f106eed0-5cb9-11ea-9367-61be8bb1066a
+message: "Hi, \r\n\r\nWe are using PowerBi and Dynamics 365 online. we have integrated powerbi with dynamics365 on system dashboards using iframe. When the user logged into the dynamics365 and navigated to dashboard, we are able to see powerbi dashboard successfully. But when we logout the dynamics365, powerbi tab is not getting signout automatically."
+name: Sandep
+email: 43006cd22fc6edc473c3ea735eb1d8ec
+url: ''
+hidden: ''
+date: '2020-03-02T19:13:47.385Z'
