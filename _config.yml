@@ -134,10 +134,10 @@ comments:
   provider: "staticman_v2"
   staticman:
     branch: "master"
-    endpoint: https://api.staticman.net/v3/entry/github/
+    endpoint: https://hajekj-staticman.azurewebsites.net/v3/entry/github/
 
 reCaptcha:
   siteKey: "6Lf8SdoUAAAAAG89yi83adBHW1DQgXchQ8Y1xB0s"
   # Encrypt reCaptcha secret key using Staticman /encrypt endpoint
   # For more information, https://staticman.net/docs/encryption
-  secret: "t2HeiVBdLeT97T1pgl5KD99bu7aNC1Qk2cwCe3/TzamUKqFYIgRX13xSbM2N9EZuDgZoUKsIYKT1472R3Q1DVy/QD1n8byR3ZOdZITENgx9+6WBxFZlaKqEtmrqRiD+etg9V5Ix+ij6jI/OpcEYABiGYQ2pSsMKI9L/BYat0c4Y="
+  secret: "O7fxi6kWaQs95KbuqMOFqy1u3w/6yuuUGLhNVLWf2WtNIpgynAMOKuKrjraWKbroH1P/pULRS4lPL7rou4E5ONxTTh/L0VhHQ1JG20DZz2dnhXmvX6Q8cTSO/CACy8omPs2B8gTGHAhclIlY0E02eLdsmSeo0eWYgLzJ5ZA81MGe5gDL8gBMgr7QbMLHX7hCu064QkGq7wIxXyX0sDE5hbcyOheibdghgR9ycVci0+1FoQlNHmD/Z9DGB2+LUmRJwKEBCPlHoOCJ2RXRdn2V8np1zxobuonXI2EEu/X4KDmPrDwJncVuDeMEI8SCqupSFyljIOX94n486ChXIIH8SA=="
