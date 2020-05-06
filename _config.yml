@@ -76,6 +76,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/hajekjnet"
+    - label: "YouTube"
+      icon: "fab fa-fw fa-youtube"
+      url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
 
 footer:
   links:
@@ -91,6 +94,9 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/hajekjnet"
+    - label: "YouTube"
+      icon: "fab fa-fw fa-youtube"
+      url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
 
 defaults:
   # _posts
