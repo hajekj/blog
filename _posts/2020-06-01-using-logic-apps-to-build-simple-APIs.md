@@ -14,6 +14,10 @@ tags:
 
 [Logic Apps](https://azure.microsoft.com/en-us/services/logic-apps/) are Microsoft's solution for integrations and also a codeless development platform (declarative). If you heard of [Microsoft Power Automate](http://flow.microsoft.com/) (formerly known as Microsoft Flow) - which is a citizen developer's tool to build workflows in a nice visual designer - it runs on top of Logic Apps backend as well.
 
+> This article is part of [#ServerlessSeptember](https://aka.ms/ServerlessSeptember2020). You'll find other helpful articles, detailed tutorials, and videos in this all-things-Serverless content collection. New articles from community members and cloud advocates are published every week from Monday to Thursday through September. 
+> 
+> Find out more about how Microsoft Azure enables your Serverless functions at [https://docs.microsoft.com/azure/azure-functions/](https://docs.microsoft.com/azure/azure-functions/?WT.mc_id=servsept20-devto-cxaall). 
+
 Thanks to Logic Apps you can easily create event-based (HTTP, Storage, Queue, Microsoft Graph, ...) triggered workflows which then perform some actions. In this article, we will focus on those HTTP triggered ones and how-to build a nice and simple API with those.
 
 First off, we start by [creating a Logic App in Azure Portal](https://docs.microsoft.com/en-us/azure/logic-apps/quickstart-create-first-logic-app-workflow) (you can also do it in Visual Studio or VS Code). We then start with creating a HTTP trigger (every Logic App needs to have a trigger of some form). Now, when you save the Logic App, the trigger will be something like this (your hostname may be different):
