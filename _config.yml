@@ -134,6 +134,8 @@ analytics:
     tracking_id: "UA-157769647-1"
     anonymize_ip: false # default
 
+after_footer_scripts:
+  - /assets/js/mvp-webtrends.js
 
 repository: hajekj/hajekj.github.io # Git username/repo-name e.g. "mmistakes/minimal-mistakes"
 comments:
