@@ -1,6 +1,6 @@
 ---
 title: Working on Surface Pro X
-date: 2020-10-05T09:30:00+02:00
+date: 2020-10-07T21:30:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft
@@ -66,5 +66,7 @@ Battery life is also very nice, I can use the device for about 8 hours without t
 Connectivity in general is good. You get one Surface adapter, which is also a charger, with the awesome feature of a built-in USB charger for your phone or another device and two USB-C ports. Getting a USB-C adapter is a must, I carry a [Microsoft USB-C Travel Hub](https://www.microsoft.com/en-us/p/microsoft-usb-c-travel-hub/8nlwz0mqk26d), so I can pretty much connect to anything, except for my Audio Jack headphones from Apple.
 
 I use AirPods with my iPhone, however the AirPods experience on Windows isn't really so great. You can use AirPods as sound output, but not as input at the same time - but it looks like a Teams-related issue rather than general system issue ([1](https://answers.microsoft.com/en-us/msoffice/forum/msoffice_o365admin-mso_teams-mso_o365b/microsoft-teams-and-apple-airpod-compatability/8e37c3c2-f8e2-4f51-9888-1a6ea65de713?auth=1), [2](https://microsoftteams.uservoice.com/forums/555103-public/suggestions/33069673-support-for-airpods)).
+
+One more thing which I am really looking forward to is the [x64 emulation which should be coming soon](https://blogs.windows.com/windowsexperience/2020/09/30/now-more-essential-than-ever-the-role-of-the-windows-pc-has-changed/) to all ARM64 based devices with Windows 10!
 
 All in all, this is a great experience and I am really in love with my Surface Pro X!
