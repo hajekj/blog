@@ -140,6 +140,9 @@ defaults:
 feed:
   path: /feed/index.xml
 
+atom_feed:
+  path: "/feed/"
+
 category_archive:
   type: liquid
   path: /categories/
