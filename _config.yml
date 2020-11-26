@@ -22,6 +22,19 @@ github_username: hajekj
 minimal_mistakes_skin: default
 search: true
 
+twitter:
+  username: "hajekj"
+social:
+  type: Person
+  name: Jan Hajek
+  links:
+    - "https://hajekj.net"
+    - "https://twitter.com/hajekj"
+    - "https://www.facebook.com/hajekj"
+    - "https://instagram.com/hajekjnet"
+    - "https://github.com/hajekj"
+    - "https://www.linkedin.com/in/jahaj/"
+
 # Build settings
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
@@ -79,6 +92,9 @@ author:
     - label: "YouTube"
       icon: "fab fa-fw fa-youtube"
       url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/jahaj/"
 
 footer:
   links:
@@ -97,6 +113,9 @@ footer:
     - label: "YouTube"
       icon: "fab fa-fw fa-youtube"
       url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/jahaj/"
 
 defaults:
   # _posts
