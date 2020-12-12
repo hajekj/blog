@@ -120,7 +120,7 @@ public class Function1
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
         ILogger log)
     {
-        var (authenticationStatus, authenticationResponse) = await req.HttpContext.AuthenticateFunctionAsync("smart");
+        var (authenticationStatus, authenticationResponse) = await req.HttpContext.AuthenticateFunctionAsync("Bearer");
         if (!authenticationStatus) return authenticationResponse;
 
         var token = await _tokenAcquisition.GetAccessTokenForUserAsync(new string[] { "https://graph.microsoft.com/.default" });
