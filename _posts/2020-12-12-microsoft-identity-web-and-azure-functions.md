@@ -138,4 +138,8 @@ public class Function1
 }
 ```
 
-So far, I found this to be quite fulfilling, since it doesn't seem to lack many things I am used to from ASP.NET Core (except for the attributes). Give it a try and see for yourself! Also, please note, that like [Christos mentioned](https://twitter.com/ChristosMatskas/status/1336685982947528704) MIW wasn't made to work with Functions, so it's not likely to receive any official support.
+So far, I found this to be quite fulfilling, since it doesn't seem to lack many things I am used to from ASP.NET Core (except for the attributes). Give it a try and see for yourself!
+
+~~Also, please note, that like [Christos mentioned](https://twitter.com/ChristosMatskas/status/1336685982947528704) MIW wasn't made to work with Functions, so it's not likely to receive any official support.~~
+
+**Update:** Thanks to [jennyf19](https://github.com/jennyf19) for [confirming](https://github.com/AzureAD/microsoft-identity-web/pull/795#issuecomment-743909991), that the team is interested in the scenario and will help out with any issues you may encounter along the way! Simply create an [issue](https://github.com/AzureAD/microsoft-identity-web/issues) in the repo if needed.
