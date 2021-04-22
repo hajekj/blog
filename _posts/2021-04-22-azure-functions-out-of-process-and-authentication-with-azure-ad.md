@@ -41,6 +41,6 @@ So how to approach this now? Since the `Microsoft.AspNetCore.Authentication.JwtB
 
 I have just made some slight modifications to the code to support the `HttpRequestData` and a few optimizations to cache the OIDC configuration. Now that the user is authenticated, we might want to get a token to call a downstream API, right? This is usually handled via [`ITokenAcquisition`](https://github.com/AzureAD/microsoft-identity-web/blob/master/src/Microsoft.Identity.Web/ITokenAcquisition.cs) implementation, so I borrowed the method name (`GetAccessTokenForUserAsync`) and implemented it to run in out-of-process! Thanks to it, we can now make calls to Microsoft Graph or any other API which the user consented to!
 
-You can find the sample code on my GitHub: **https://github.com/hajekj/azure-functions-dotnet-worker-miw**
+You can find the sample code on my GitHub: **[https://github.com/hajekj/azure-functions-dotnet-worker-miw](https://github.com/hajekj/azure-functions-dotnet-worker-miw)**
 
 > Note: Once again, the code is really dirty, I just put the pieces together to get it working for a demo. You can easily make it work with B2C by switching the authority and providing the flow name.
