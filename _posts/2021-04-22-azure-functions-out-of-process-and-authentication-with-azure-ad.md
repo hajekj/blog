@@ -46,3 +46,9 @@ I have just made some slight modifications to the code to support the `HttpReque
 You can find the sample code on my GitHub: **[https://github.com/hajekj/azure-functions-dotnet-worker-miw](https://github.com/hajekj/azure-functions-dotnet-worker-miw)**
 
 > Note: Once again, the code is really dirty, I just put the pieces together to get it working for a demo. You can easily make it work with B2C by switching the authority and providing the flow name.
+
+---
+
+**Update:**
+
+Since the out-of-process model supports using custom middlewares, I started to [implement the authentication one](https://github.com/hajekj/azure-functions-dotnet-worker-miw/blob/master/WorkerAuthentication/AuthenticationMiddleware.cs). However, there seem to be quite a few limitations which I [described in a GitHub issue](https://github.com/Azure/azure-functions-dotnet-worker/issues/414), hoping that someone will help out or provide guidance.
