@@ -1,6 +1,6 @@
 ---
 title: Azure Functions out-of-process and authentication with Azure AD
-date: 2022-04-22T15:15:00+02:00
+date: 2021-04-22T15:15:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft
@@ -12,6 +12,8 @@ tags:
   - Identity
   - MSAL
   - Authentication
+redirect_from:
+  - /2022/04/22/azure-functions-out-of-process-and-authentication-with-azure-ad/
 ---
 
 Last year I managed to get [Microsoft.Identity.Web running with Azure Functions](/2020/12/12/microsoft-identity-web-and-azure-functions/). During the time, Microsoft released a new model for hosting Functions on .NET called [out-of-process ](https://docs.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-process-guide). This is used to run Functions in .NET 5.0, will be available with 6.0 and will be the only model available since .NET 7.0 as per [roadmap](https://techcommunity.microsoft.com/t5/apps-on-azure/net-on-azure-functions-roadmap/ba-p/2197916). The out-of-process model comes with numerous differences, so I am going to go through those and show you, how to get authentication via Azure AD running there (and mimick some of the MIW functionality).
