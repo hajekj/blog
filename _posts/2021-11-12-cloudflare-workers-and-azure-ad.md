@@ -58,7 +58,7 @@ The last step is to call the Graph API with the received token and return back t
 
 # Summary
 
-Fully working sample: **https://github.com/hajekj/cloudflare-workers-aad**
+Fully working sample: **[https://github.com/hajekj/cloudflare-workers-aad](https://github.com/hajekj/cloudflare-workers-aad)**
 
 * Make sure to generate your frontend and backend applications
 * Backend application needs to have its `Application ID URI` set along with some default scope you plan to use for OBO flow.
