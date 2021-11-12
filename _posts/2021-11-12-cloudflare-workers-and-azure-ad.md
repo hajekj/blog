@@ -1,5 +1,5 @@
 ---
-title: OpenAPI and Azure Functions Out-of-Process
+title: Cloudflare Workers and Azure AD
 date: 2021-11-12T15:00:00+02:00
 author: Jan Hajek
 categories:
