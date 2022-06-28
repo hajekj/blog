@@ -1,0 +1,12 @@
+_id: ac833b70-8da3-11ec-b94b-6b9aa0d8f3c0
+message: >-
+  I tried the above options. Still samesite not working in Safari. I am using
+  Asp .Net Core 3.1 with React SPA template. Both frontend and backend deployed
+  independently. If I am not wrong, I need to make these changes on frontend
+  which is build using (ASP.NET Core app with React js template). Any help would
+  be appreciated.
+name: Sarah
+email: da55e5e8c21639c3104b83bf44a46507
+url: ''
+hidden: ''
+date: '2022-02-14T14:37:46.160Z'
