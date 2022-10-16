@@ -2,6 +2,7 @@
     window.addEventListener('load', function () {
         var webtrendsList = [
             "docs.microsoft.com",
+            "learn.microsoft.com",
             "social.technet.microsoft.com",
             "azure.microsoft.com",
             "techcommunity.microsoft.com",
