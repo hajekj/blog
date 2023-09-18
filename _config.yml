@@ -154,7 +154,7 @@ tag_archive:
 analytics:
   provider: "google-gtag"
   google:
-    tracking_id: "UA-157769647-1"
+    tracking_id: "G-D17599V5LV"
     anonymize_ip: false # default
 
 after_footer_scripts:
