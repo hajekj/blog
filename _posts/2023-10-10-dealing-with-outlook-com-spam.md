@@ -51,3 +51,5 @@ This will effectively allow only whitelisted senders (contacts and safe list mem
 # Conclusion
 
 I would like to conclude this article with one statement: I love Outlook.com, I am a paying user, but the level of support and communication Microsoft is providing regarding this issue is completely unacceptable. The [status page](https://portal.office.com/ServiceStatus) says nothing is wrong, there is no support article publicly available regarding the spam issue and the biggest issue is that standard, non-technical users, who are much more vulnerable to falling for phishing are facing this as well. I am sure that Microsoft is aware and working to resolve this as fast as they can, but they should at least communicate this to their users like they do with other services.
+
+> Continues with [part 2](https://hajekj.net/2023/10/11/dealing-with-outlook-com-spam-pt2/) where we use Logic Apps and OpenAI to classify the Junk mail and detect legit messages.
