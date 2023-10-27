@@ -151,12 +151,6 @@ tag_archive:
   type: liquid
   path: /tags/
 
-analytics:
-  provider: "google-gtag"
-  google:
-    tracking_id: "G-D17599V5LV"
-    anonymize_ip: false # default
-
 after_footer_scripts:
   - /assets/js/mvp-webtrends.js
 
