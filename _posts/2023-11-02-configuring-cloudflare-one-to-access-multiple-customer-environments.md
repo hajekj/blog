@@ -13,7 +13,7 @@ tags:
   - VPN
 ---
 
-In our company, we have been heavily utilising [SoftEther VPN](https://www.softether.org/) which is a truly amazing, and unique project. Recently, we started shifting towards a more modern approach to VPN - [Cloudflare One](https://www.softether.org/), which offers zero-trust access, direct integration with Azure AD and more.
+In our company, we have been heavily utilising [SoftEther VPN](https://www.softether.org/) which is a truly amazing, and unique project. Recently, we started shifting towards a more modern approach to VPN - [Cloudflare One](https://www.cloudflare.com/cloudflare-one/), which offers zero-trust access, direct integration with Azure AD and more.
 
 <!--more-->
 
