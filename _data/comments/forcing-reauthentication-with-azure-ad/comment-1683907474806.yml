@@ -1,0 +1,13 @@
+_id: af9580d0-f0de-11ed-bea7-81b30c4b445c
+message: >-
+  login_hint came close to force user to re-enter credentials.   However,
+  browser profile sync just automatically bypasses upon account selection it the
+  user has setup (similar to the save userid password when visiting many
+  websites).   With the parameters option, why not a full querystring encryption
+  share between the provider and application to prevent the user from
+  manipulating or removing the values?
+name: Norm
+email: 6ae9fe8c797d7481f92bdd8db17012e6
+url: ''
+hidden: ''
+date: '2023-05-12T16:04:34.762Z'

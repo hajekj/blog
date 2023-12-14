@@ -1,0 +1,7 @@
+_id: 8d3f40e0-93d6-11ec-b94b-6b9aa0d8f3c0
+message: "Hi Jan,\r\n\r\nThanks for the article.\r\n\r\nWhere a user simply logs out of a single app and not fully from azure ad the app will as you say destroy the session and in essence force the user to log on again, only to the app.  The problem with this is that when the app then Challenges at azure it simply responds positively (assuming the user was able to log on previously or the user is logged into some other app that required an azure ad logon).  Hence the user logging on is not forced to enter their details again.  \r\n\r\nI wonder what the point is in logging the user off if they can just walk straight back in by clicking the logon button and not needing to re-enter their details?\r\n\r\nHow would one manage a client-side timeout if they aren't able to actually log a user out?\r\n\r\nBest regards,\r\n\r\nChris"
+name: CJMak
+email: f163c641e05f297d293ea93183e0212d
+url: ''
+hidden: ''
+date: '2022-02-22T11:57:05.281Z'
