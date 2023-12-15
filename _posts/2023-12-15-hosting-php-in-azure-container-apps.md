@@ -1,6 +1,6 @@
 ---
 title: Hosting PHP in Azure Container Apps
-date: 2023-12-20T10:00:00+02:00
+date: 2023-12-15T10:00:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft
