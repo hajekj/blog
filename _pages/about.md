@@ -21,4 +21,4 @@ Additionally, I also contribute to [TheNetw.org’s blog](https://blog.thenetw.o
 
 ---
 
-You may also find me on Discord as `hajekj#7745`.
+You may also find me on Discord as [`hajekj`](https://discord.com/users/174467472974544896).
