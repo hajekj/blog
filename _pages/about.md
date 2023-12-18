@@ -5,7 +5,7 @@ title: "About Me"
 
 I am Jan, hi. People also call me Honza , "Haichi" (ハイチー) or HH ("double-H") and I am also known as [Honza Noyes](https://my.secondlife.com/honza.noyes) in Second Life.
 
-I am co-founder of a company called [TheNetw.org](https://thenetw.org) (NETWORG) which focuses on development, consulting and IT activities not limited only to the Czech Republic.
+I am co-founder of a company called [NETWORG](https://thenetw.org) (previously TheNetw.org) which focuses on development, consulting and IT activities not limited only to the Czech Republic.
 
 On 1st of August 2018 I received a [Microsoft Most Valuable Professional award](https://mvp.microsoft.com/en-us/PublicProfile/5003178?fullName=Jan%20%20Hajek) (MVP) in Microsoft Azure category!
 
