@@ -86,9 +86,10 @@ And you should be good to go. The performance and cost benefits are really worth
 
 # Network connection optimization
 
-https://github.com/ecalder6/azure-gaming/issues/50
+One thing to note is streaming performance. By default, Steam Remote Play works behind NAT and without public IP address, and everything gets routed through Valve's servers, which adds latency on the route. It is possible to connect directly, but you need to do following:
 
-```
-steam.exe -console
-connect_remote <IP>:27036
-```
+1. Open ports on your VM - you can do this in the Network Security Group, and you will need 27031 - 27037 for UDP and TCP ([more info](https://help.steampowered.com/en/faqs/view/3E3D-BE6B-787D-A5D2))
+1. Connect directly to your VM from Steam - you can do this by opening Steam console and typing `connect_remote <IP>:27036` (replace `<IP>` with your VM's public IP address). You can also use `steam.exe -console` to open the console, and then type the command.
+1. You can verify with Wireshark that the connection is now direct
+
+For some reason, the `connect_remote` command seems to be necessary, but sometimes in the past, it worked for me without it. Maybe it's a change on Steam's side or something else, not sure. I also created a comment about the direct connection in the [setup repo](https://github.com/ecalder6/azure-gaming/issues/50).
