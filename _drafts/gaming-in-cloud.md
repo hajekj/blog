@@ -83,3 +83,12 @@ If you execute this on your local PC, it will disconnect the session and the use
 Next, [download and install Steam](https://store.steampowered.com/about/), install your games and enjoy. Also remember that you can also Stream non-Steam games this way by [adding them to your library](https://help.steampowered.com/en/faqs/view/4B8B-9697-2338-40EC). So you can play Battlefield 4 and others.
 
 And you should be good to go. The performance and cost benefits are really worth it, and it's much cheaper than buying a good gaming graphics card (or an entire PC) as long as you are not playing 24/7.
+
+# Network connection optimization
+
+https://github.com/ecalder6/azure-gaming/issues/50
+
+```
+steam.exe -console
+connect_remote <IP>:27036
+```
