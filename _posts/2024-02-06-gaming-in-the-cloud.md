@@ -1,5 +1,5 @@
 ---
-title: Gaming in cloud
+title: Gaming in the cloud
 date: 2024-02-06T10:10:00+02:00
 author: Jan Hajek
 categories:
