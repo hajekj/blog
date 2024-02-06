@@ -124,7 +124,7 @@ $intGroups = $groups | Where-Object { $_.DisplayName -like "INT*" }
 $pstGroups = $groups | Where-Object { $_.DisplayName -like "PST*" }
 $filteredGroups = $pctGroups + $agtGroups + $intGroups + $pstGroups
 $existingAssignments = Get-MgServicePrincipalAppRoleAssignedTo -ServicePrincipalId <your_scim_app_id> -All | Where-Object { $_.PrincipalType -eq 'Group' } | Foreach-Object { ,$_.PrincipalId }
-$toAssign = $filteredGroups | Where { -not $existingAssignments -contains $_.Id }
+$toAssign = $filteredGroups | Where { $existingAssignments -notcontains $_.Id }
 $toAssign | ForEach-Object { New-MgServicePrincipalAppRoleAssignment -ServicePrincipalId <your_scim_app_id> -ResourceId <your_scim_app_id> -PrincipalId $_.Id -AppRoleId <role_id_from_scim_app> }
 ```
 
