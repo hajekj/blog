@@ -1,11 +1,13 @@
 ---
 title: Gaming in cloud
-date: 2024-02-06T15:30:00+02:00
+date: 2024-02-06T10:10:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft Azure
 tags:
   - Games
+  - Steam
+  - Streaming
 ---
 
 I have been a gamer since my childhood. Watching my cousins play Half-Life or Return to Castle Wolfenstein, through playing GTA: Vice City, Counter-Strike, exploring the metaverse - Second Life and participating in the combat community there, to playing Arma 3, Battlefield 3 and 4, Cyberpunk 2077 and more recent games. I have, however always struggled behind with my computer hardware. Not being able to run the latest games on the highest settings, or even run them at all. This has changed since Microsoft Azure introduced its N-series Virtual Machines which contain a dedicated GPU (back in 2016).
