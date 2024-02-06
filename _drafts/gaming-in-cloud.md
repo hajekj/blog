@@ -86,10 +86,17 @@ And you should be good to go. The performance and cost benefits are really worth
 
 # Network connection optimization
 
-One thing to note is streaming performance. By default, Steam Remote Play works behind NAT and without public IP address, and everything gets routed through Valve's servers, which adds latency on the route. It is possible to connect directly, but you need to do following:
+> This is for more advanced users, and unless you face latency issue in streaming (quality, lag, ...), you don't need to do this.
 
-1. Open ports on your VM - you can do this in the Network Security Group, and you will need 27031 - 27037 for UDP and TCP ([more info](https://help.steampowered.com/en/faqs/view/3E3D-BE6B-787D-A5D2))
-1. Connect directly to your VM from Steam - you can do this by opening Steam console and typing `connect_remote <IP>:27036` (replace `<IP>` with your VM's public IP address). You can also use `steam.exe -console` to open the console, and then type the command.
+One thing to note is streaming performance. By default, Steam Remote Play works behind NAT and without public IP address, and everything gets routed through Valve's servers, which adds latency on the route. In order to do that, open ports on your VM - you have to do this in the Network Security Group and Windows Firewall as well. You will need 27031 - 27037 for UDP and TCP ([more info](https://help.steampowered.com/en/faqs/view/3E3D-BE6B-787D-A5D2)). Once you configure this, restart your VM.
+
+> Some people have used [ZeroTier](https://zerotier.com) to estabilish a VPN (sort of like Hamachi), but I prefer direct connection.
+
+Another crucial part is to verify that the connection is direct. You can do this by using [Wireshark](https://www.wireshark.org/) on your local PC and filtering for the VM's public IP address - you will see a lot of UDP traffic when you start streaming a game. If you however see the traffic going through Valve's servers (this sometimes happens, for unknown reasons to me), you can force a direct connection from your Steam client:
+
+1. Launch Steam on your local PC via `steam.exe -console` command
+1. Open the Steam console and type `connect_remote <IP>:27036` (replace `<IP>` with your VM's public IP address)
+1. Start streaming a game
 1. You can verify with Wireshark that the connection is now direct
 
 For some reason, the `connect_remote` command seems to be necessary, but sometimes in the past, it worked for me without it. Maybe it's a change on Steam's side or something else, not sure. I also created a comment about the direct connection in the [setup repo](https://github.com/ecalder6/azure-gaming/issues/50).
