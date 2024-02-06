@@ -1,6 +1,6 @@
 ---
 title: Gaming in cloud
-date: 2024-02-05T15:30:00+02:00
+date: 2024-02-06T15:30:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft Azure
