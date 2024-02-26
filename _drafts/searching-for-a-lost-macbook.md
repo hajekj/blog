@@ -1,5 +1,5 @@
 ---
-title: Finding a lost MacBook
+title: Searching for a lost MacBook
 date: 2024-02-25T21:32:53+02:00
 author: Jan Hajek
 categories:
@@ -76,6 +76,6 @@ So unless someone finds the MacBook and brings it to the police or reception, it
 # Next steps...
 We were too late. We couldn't have retrieved this one (or maybe yes, but by breaking law and being very annoying by going door to door). But we could've if we had the knowledge beforehand. And that's the thing I am going to focus on - a chance to help others to find their lost devices leveraging Find My and Offline Find.
 
-Starting by putting together all the Python scripts we used during the search and putting together a guide to do the same on **[GitHub](TBD)**.
+Starting by putting together all the Python scripts we used during the search and putting together a guide to do the same on **[GitHub](https://github.com/hajekj/OfflineFindRecovery)**.
 
 Next step is going to be to take the code, turn it into a JavaScript (or compile via WASM) and create a user-friendly application user interface where the user can simply input the beacon keys and it will search for the device and show the signal strength (or distance). It is all going to be free to use and open-source.
