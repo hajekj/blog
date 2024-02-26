@@ -1,6 +1,6 @@
 ---
 title: Searching for a lost MacBook
-date: 2024-02-25T21:32:53+02:00
+date: 2024-02-26T10:30:00+02:00
 author: Jan Hajek
 categories:
   - Apple
