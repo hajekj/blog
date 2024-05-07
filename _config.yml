@@ -36,7 +36,7 @@ social:
 
 # Build settings
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: mmistakes/minimal-mistakes@4.26.0
 # Outputting
 permalink: /:year/:month/:day/:title/
 paginate: 10 # amount of posts to show
