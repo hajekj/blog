@@ -102,3 +102,13 @@ Another crucial part is to verify that the connection is direct. You can do this
 1. You can verify with Wireshark that the connection is now direct
 
 For some reason, the `connect_remote` command seems to be necessary, but sometimes in the past, it worked for me without it. Maybe it's a change on Steam's side or something else, not sure. I also created a comment about the direct connection in the [setup repo](https://github.com/ecalder6/azure-gaming/issues/50).
+
+# Launching GOG Galaxy (29SEP2024)
+
+If you want to play games from [GOG](https://www.gog.com), the launcher is not going to start through Remote Desktop unfortunately (I really wonder who would write code in such way). The workaround ([reference](https://www.gog.com/forum/general/gog_galaxy_via_remote_desktop_doesnt_work)), is to create a `.bat` file to disconnect the remote session (just like when starting to stream), wait for few seconds and then launch GOG. Then you reconnect to the Remote Desktop session and GOG should be working.
+
+```bat
+%windir%\System32\tscon.exe %SESSIONNAME% /dest:console
+timeout 3
+"C:\Program Files (x86)\GOG Galaxy\GalaxyClient.exe"
+```
