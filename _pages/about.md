@@ -7,7 +7,7 @@ I am Jan, hi. People also call me Honza , "Haichi" (ハイチー) or HH ("doubl
 
 I am co-founder of a company called [NETWORG](https://thenetw.org) (previously TheNetw.org) which focuses on development, consulting and IT activities not limited only to the Czech Republic.
 
-On 1st of August 2018 I received a [Microsoft Most Valuable Professional award](https://mvp.microsoft.com/en-us/PublicProfile/5003178?fullName=Jan%20%20Hajek) (MVP) in Microsoft Azure category!
+On 1st of August 2018 I received a [Microsoft Most Valuable Professional award](https://mvp.microsoft.com/en-US/mvp/profile/962f4ea2-aa90-e811-813c-3863bb2bca60) (MVP) in Microsoft Azure category!
 
 I am passionate about Microsoft technologies, especially Microsoft Azure and ASP.NET Core. I also work with JavaScript / TypeScript / Node.js and PHP. I am also interested into identity (especially Azure AD) and security.
 
