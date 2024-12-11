@@ -1,5 +1,5 @@
 ---
-title: Optimizion Azure Functions costs
+title: Optimizing Azure Functions costs
 date: 2024-12-11T17:30:00+02:00
 author: Jan Hajek
 categories:
