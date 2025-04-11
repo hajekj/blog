@@ -3,7 +3,7 @@ permalink: /about-me/
 title: "About Me"
 ---
 
-I am Jan, hi. People also call me Honza , "Haichi" (ハイチー) or HH ("double-H") and I am also known as [Honza Noyes](https://my.secondlife.com/honza.noyes) in Second Life.
+I am Jan, hi. People also call me Honza, "Haichi" (ハイチー) or HH ("double-H") and I am also known as [Honza Noyes](https://my.secondlife.com/honza.noyes) in Second Life.
 
 I am co-founder of a company called [NETWORG](https://thenetw.org) (previously TheNetw.org) which focuses on development, consulting and IT activities not limited only to the Czech Republic.
 
