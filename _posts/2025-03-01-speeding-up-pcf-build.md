@@ -12,6 +12,8 @@ tags:
 
 At [NETWORG](https://www.networg.com) we have been extensively using [Power Apps component framework](https://learn.microsoft.com/en-us/power-apps/developer/component-framework/overview) which allows us to build custom UI components for Power Apps. Our largest repo with controls (which we continuously update and re-use across customers) has over 47 controls. The repo is setup with [Rush framework](https://rushjs.io/) to streamline dependency management (more on that topic in another article). And the build for each control in CI (Azure DevOps) averages for 1:30 minutes (the build altogether takes 70 minutes).
 
+<!-- more -->
+
 Our controls make use of various [Fluent UI](https://github.com/microsoft/fluentui) packages (we have our own component libraries implementing and wrapping Fluent components), and during the build, you could observe the following log:
 
 ```
