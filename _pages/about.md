@@ -17,7 +17,7 @@ You can find out more about me on [LinkedIn](https://www.linkedin.com/in/jahaj/
 
 If you wish to contact me, you can use one of the options from the social widget within the sidebar or reach out to me by e-mail – [hajek.j@hotmail.com](mailto:hajek.j@hotmail.com).
 
-Additionally, I also contribute to [NETWORG’s blog](https://blog.thenetw.org), so you may find some interesting posts there too.
+Additionally, I also contribute to [NETWORG's blog](https://blog.thenetw.org), so you may find some interesting posts there too.
 
 ---
 
