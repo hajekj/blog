@@ -9,7 +9,7 @@ I am co-founder of a company called [NETWORG](https://thenetw.org) (previously T
 
 On 1st of August 2018 I received a [Microsoft Most Valuable Professional award](https://mvp.microsoft.com/en-US/mvp/profile/962f4ea2-aa90-e811-813c-3863bb2bca60) (MVP) in Microsoft Azure category!
 
-I am passionate about Microsoft technologies, especially Microsoft Azure and ASP.NET Core. I also work with JavaScript / TypeScript / Node.js and PHP. I am also interested into identity (especially Azure AD) and security.
+I am passionate about Microsoft technologies, especially Microsoft Azure and ASP.NET Core and most recently Power Platform. I also work with JavaScript / TypeScript / Node.js and PHP. I am also interested into identity (especially Azure AD) and security.
 
 I like to spend time learning about new technologies and share my experience with others through my blog, various conferences or podcasts and videos.
 
