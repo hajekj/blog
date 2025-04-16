@@ -19,7 +19,9 @@ The motivation behind this is that people seem to do a lot of unnecessary API ca
 
 As some of these properties are not documented (or included in types), it may be a challenge to access them.
 
-I am not really happy from the inconsistencies between XRM and PCF APIs. I can imagine some reasons behind it - like it unifies Canvas, Model driven and Power Pages, but that's not really what's behind the scenes. We will take a deeper look into PCFs in Power Pages another time. Have fun!
+I am not really happy from the inconsistencies between XRM and PCF APIs. I can imagine some reasons behind it - like it unifies Canvas, Model driven and Power Pages, but that's not really what's behind the scenes. We will take a deeper look into PCFs in Power Pages another time.
+
+Before we get into the specifics, you might ask - what is any of this good for? Well, for example, if you want to call a 3rd party Entra protected API (or even Microsoft Graph) from within your PCF, you need to authenticate. For authentication, you should use [MSAL](https://learn.microsoft.com/en-us/javascript/api/overview/msal-overview?view=msal-js-latest) (or any other OAuth2/OIDC compliant client) and for constructing the correct authority URL (and accessing metadata) you need the tenant ID (like `https://login.microsoftonline.com/<tenant-id>/`). For silent SSO to provide `login_hint` parameter, you need the user principal name. We will go deeper into authentication topic later.
 
 # Obtaining user's ID (systemuserid)
 
