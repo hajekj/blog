@@ -1,6 +1,6 @@
 ---
-title: All the ways of retrieving user ID and tenant ID in Power Apps
-date: 2025-04-16T17:30:00+02:00
+title: All the ways of retrieving user ID, tenant ID, UPN and environment ID in Power Apps
+date: 2025-04-17T12:30:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft
@@ -9,6 +9,7 @@ tags:
   - Power Apps component framework
   - XRM
   - Authentication
+toc: true
 ---
 
 Whether you're trying to handle authentication or doing something else, you might need to obtain the current tenant ID or user's object ID in Entra. There are a few ways of doing this from the client and not all of them are well known (or even possible).
@@ -41,7 +42,7 @@ const systemuserid = context.userSettings.userId;
 // {B71109E2-3BB7-4A62-AAD1-072214FAC31C}
 ```
 
-## WebAPI
+## Web API
 
 Either execute this either via `Xrm.WebApi.execute`, in cookie-authenticated session or with a Bearer token. [WhoAmI reference](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/whoami?view=dataverse-latest)
 ```http
@@ -73,7 +74,7 @@ const tenantId = context.orgSettings.tenantId;
 // 67266d43-8de7-494d-9ed8-3d1bd3b3a764
 ```
 
-## WebAPI
+## Web API
 
 [RetrieveCurrentOrganization reference](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization?view=dataverse-latest)
 ```http
@@ -98,7 +99,7 @@ Response:
 At the moment, there doesn't seem to be a way to pull user's object ID from XRM directly.
 
 ```typescript
-// Unsupported way, you can check this value and fallback to the WebAPI call below for backup
+// Unsupported way, you can check this value and fallback to the Web API call below for backup
 const aadObjectId = window.__preload.aadObjectId;
 // d8b828cf-6af7-4673-b11e-7de2dc05236f
 ```
@@ -110,7 +111,7 @@ const aadObjectId = context.userSettings.aadObjectId;
 // d8b828cf-6af7-4673-b11e-7de2dc05236f
 ```
 
-## WebAPI
+## Web API
 
 ```http
 GET https://<instance>.crm4.dynamics.com/api/data/v9.1/systemusers(<systemuserid>)?$select=azureactivedirectoryobjectid
@@ -130,10 +131,10 @@ You need this for example when doing SSO and want to provide [`login_hint`](http
 
 ## XRM
 
-Unsprisingly, just like with Entra user's object ID, this is not directly supported.
+Unsprisingly, just like with Entra user's object ID, this is not directly supported. This value contains the correct information even in B2B scenarios (see Web API for more on B2B UPNs).
 
 ```typescript
-// Unsupported way, you can check this value and fallback to the WebAPI call below for backup
+// Unsupported way, you can check this value and fallback to the Web API call below for backup
 const loginHint = window.__preload.aadLoginHint;
 // jan.hajek@thenetw.org
 ```
@@ -142,7 +143,7 @@ const loginHint = window.__preload.aadLoginHint;
 
 Unfortunately, it is not available either, so you have to use the method mentioned above in XRM or call the Web API.
 
-## WebAPI
+## Web API
 
 You should be using `windowsliveid` which corresponds to the UPN, whereas `internalemailaddress` is user's primary e-mail address. Retrieving both is necessary for B2B guest scenarios, where `windowsliveid` will contain [`#EXT#`](https://learn.microsoft.com/en-us/entra/external-id/user-properties#user-principal-name) which won't work for `loginHint` and you will have to try with `internalemailaddress` (which will work in most cases). With organizations whose UPN doesn't match primary email address (for whatever reason), you will want to use `windowsliveid`.
 
@@ -174,7 +175,7 @@ const tenantId = Xrm.Utility.getGlobalContext().organizationSettings.bapEnvironm
 
 You cannot retrieve this information through PCF's context, use the XRM way.
 
-## WebAPI
+## Web API
 
 [RetrieveCurrentOrganization reference](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/reference/retrievecurrentorganization?view=dataverse-latest)
 ```http
@@ -191,3 +192,7 @@ Response:
   }
 }
 ```
+
+# Have I missed a way?
+
+Let me know! I am curious about any other ways you might use to obtain these values.
