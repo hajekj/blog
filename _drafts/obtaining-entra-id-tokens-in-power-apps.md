@@ -57,7 +57,10 @@ One solution to this would be the use of freshly added [Nested App Authenticatio
 
 https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/ca8cb7dc08b26ba10998a67ce07968f40de700ee/lib/msal-browser/docs/images/msaljs-boot-flow.png
 
-## Multipel controls on the same page with auth
+## Multiple controls on the same page with auth
+
+* Don't use setActiveAccount
+* Use separate client ids
 
 # Advanced scenario with Token Broker
 
