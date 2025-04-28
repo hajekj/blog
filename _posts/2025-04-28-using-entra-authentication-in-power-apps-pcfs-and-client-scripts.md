@@ -93,6 +93,22 @@ Once you get the token back, you can call your resource.
 
 # Sample
 
-The basic SSO with logic for obtaining the account, attempting silent SSO, doing the popup login and multiple controls per page is available on GitHub: https://github.com/NETWORG/sample-pcf-msal
+The basic SSO with logic for obtaining the account, attempting silent SSO, doing the popup login and multiple controls per page is available on GitHub: **[https://github.com/NETWORG/sample-pcf-msal](https://github.com/NETWORG/sample-pcf-msal)**
 
 It contains an app module sample, so you can simply just build the solution and import it to your dev environment (see the commands in README). The sample provides two client IDs, which you can change for your own, but for development purposes, you can use them, they are confured as multi-tenant apps, so as long as you are fine with consenting them in your tenant (they just have [`User.Read`](https://learn.microsoft.com/en-us/graph/permissions-reference#userread) permission in Graph).
+
+# Note on canvas apps
+
+An [interesting question was raised on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7322519206539808769?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7322519206539808769%2C7322583950382489600%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287322583950382489600%2Curn%3Ali%3Aactivity%3A7322519206539808769%29): How do you do any of this in canvas apps?
+
+> I haven't tested any of this, it's just a thought process. If you give this a try in canvas apps, please let me know how it went.
+
+Well, canvas apps are different. They don't share the same origin, they handle PCF differently (context especially), they load the PCF resources differently and through different origins.
+
+My canvas app runtime appears to be using `https://runtime-app.powerplatform.com/` domain, the authoring (maker) is using something like this `https://authoring.eu-il109.gateway.prod.island.powerapps.com` which is likely to be different per deployment island. And neither serves `popup.html` from your PCF.
+
+Two quick solutions from the top of my head:
+1. You could technically build your own iframe or popup and then do a `postMessage` with the authorization response from it and pass it back to MSAL - the entire hash and handling it via MSAL's `handleRedirectPromise`.
+2. MSAL periodically tries to check the iframe/popup for the hash (if it's on different origin, it return nothing, so it keeps trying). You could specify the redirect URI as `https://runtime-app.powerplatform.com/something-dummy-auth-redirect` (you can get this value in the PCF) and while it responds with 404, the hash will be there and MSAL should pick it up. You could then do this dynamically via the SSO redirector mentioned in the blog in case it changes.
+
+Option 2 looks probably most viable to me, combined with the SSO redirector, could be easy enough.
