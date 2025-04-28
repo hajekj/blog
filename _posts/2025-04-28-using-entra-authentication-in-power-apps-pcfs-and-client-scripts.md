@@ -1,5 +1,6 @@
 ---
-title: Obtaining Entra ID tokens in Power Apps
+title: Using Entra authentication in Power Apps PCFs and client scripts
+date: 2025-04-28T09:00:00+02:00
 author: Jan Hajek
 categories:
   - Microsoft
@@ -50,24 +51,48 @@ Additionally if your users are using Microsoft Edge with work account signed-in 
 
 One solution to this would be the use of freshly added [Nested App Authentication](https://learn.microsoft.com/en-us/microsoftteams/platform/concepts/authentication/nested-authentication) which was invented to specifically handle these scnearios. It allows the host app to broker tokens for the child apps rendered within. Unfortunately, this is only available in Microsoft Teams and some Office apps only.
 
-## Switching accounts, guests and multiple tenants
+## Multiple tenants, guests and switching accounts
 
-* Comparing tenant ID
-* Ignoring other accounts
+In 99% cases, you want the user to use the same account they used to sign-in to Power Apps. If you don't deal with [B2B guest users](https://learn.microsoft.com/en-us/entra/external-id/user-properties), you don't have to care about it much, but if you want to support guests (and you should especially when you're redistributing your PCF), the [configured authority in MSAL](https://learn.microsoft.com/en-us/entra/identity-platform/msal-client-application-configuration#authority) should contain the current environment's tenant ID (and [you already know how to get it](https://hajekj.net/2025/04/17/all-the-ways-of-retrieving-user-id-tenant-id-upn-and-environment-id-in-power-apps/#pcf-1)).
 
-https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/ca8cb7dc08b26ba10998a67ce07968f40de700ee/lib/msal-browser/docs/images/msaljs-boot-flow.png
+Next, you have to obtain user's UPN for [`loginHint`](https://learn.microsoft.com/en-us/entra/identity-platform/msal-js-sso#with-user-hint) (again, you [already know how to do it](https://hajekj.net/2025/04/17/all-the-ways-of-retrieving-user-id-tenant-id-upn-and-environment-id-in-power-apps/#xrm-3)).
 
-## Multiple controls on the same page with auth
+In order to check if the user has already signed-in, or you have their refresh token you can retrieve it via [`getAccountByUsername`](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/login-user.md#account-apis), the provided account can also serve as `loginHint` for MSAL. When getting the accounts from MSAL, you should always try to match the correct one to the current user.
 
-* Don't use setActiveAccount
-* Use separate client ids
+Lastly, you should not use [`setActiveAccount`](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/accounts.md#active-account-apis) and instead persist the selected account yourself, because the active account is shared across all MSAL libraries on the page and MSAL wasn't really built to be run in multiple instances on the same page at the same time.
 
-# Advanced scenario with Token Broker
+You can use this diagram for the implementation (but you want to skip some parts mentioned above).
 
-# React alternative - Microsoft Graph Toolkit (MGT)
+[![](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/ca8cb7dc08b26ba10998a67ce07968f40de700ee/lib/msal-browser/docs/images/msaljs-boot-flow.png?raw=true)](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/ca8cb7dc08b26ba10998a67ce07968f40de700ee/lib/msal-browser/docs/images/msaljs-boot-flow.png)
+
+# React alternative
+
+If you want to do this in React directly, you can using [`@azure/msal-react`](https://www.npmjs.com/package/@azure/msal-react).
 
 # Approach in client scripts
 
+If you want to do the same in client scripts (eg. app ribbon, or any other ribbon or on form etc.) you can do the same as above, except for rendering your open popup button, you must use [`openAlertDialog`](https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/clientapi/reference/xrm-navigation/openalertdialog) because you shouldn't really access the DOM from client scripts.
+
+You can also notice that Microsoft does the same thing when you open a Model Driven App with third party cookies disabled.
+
+# Advanced scenario with Token Broker
+
+> This is an advanced scenario, and if you want to know more, feel free to [reach out](https://www.networg.com).
+
+Now if you have many controls on the same page, eventually some client scripts, you don't want to spam the user with login popup prompts. One solution to that would be the use of [NAA](#nested-app-authentication-naa), but I don't believe it's likely to come into Power Apps, so the second best option is to create your own token broker, which does something like NAA.
+
+This pattern is also what you have to do when [building Microsoft Teams apps](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-overview) and it struggles with the same [third party cookies problem](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-overview#third-party-cookies-on-ios).
+
+Basically you add an authorized client application (the broker) to your PCF's app registration. This tells Entra that when the broker requests a token for your app, it will work without [explicitly being consented for](https://learn.microsoft.com/en-us/entra/identity-platform/reference-app-manifest#knownclientapplications-attribute).
+
+So at this point, you get a token for your PCF (`aud` is `your-pcf-app-id`), but you can't call Microsoft Graph (or any other API) with that! The next step is, that you need to exchange this token for the token for the target application. This is achgieved via [On-Behalf-Of flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow) in Entra. This call however has to be done via backend, as it requires `client_secret` to be provided ([Microsoft Teams reference](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-graph-api?tabs=dotnet#exchange-the-token-id-with-the-server-side-token)).
+
+Once you get the token back, you can call your resource.
+
+![](/uploads/2025/04/pcf-token-broker.png)
+
 # Sample
 
-https://github.com/NETWORG/sample-pcf-msal
+The basic SSO with logic for obtaining the account, attempting silent SSO, doing the popup login and multiple controls per page is available on GitHub: https://github.com/NETWORG/sample-pcf-msal
+
+It contains an app module sample, so you can simply just build the solution and import it to your dev environment (see the commands in README). The sample provides two client IDs, which you can change for your own, but for development purposes, you can use them, they are confured as multi-tenant apps, so as long as you are fine with consenting them in your tenant (they just have [`User.Read`](https://learn.microsoft.com/en-us/graph/permissions-reference#userread) permission in Graph).
