@@ -10,7 +10,7 @@ categories:
 tags:
   - SharePoint
   - Microsoft Flow
-  - Microsoft Power Automate
+  - Power Automate
   - Azure AD
 link: https://blog.thenetw.org/2020/11/27/setting-sharepoint-item-permissions-to-aad-group/
 ---
