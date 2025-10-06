@@ -134,6 +134,11 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # sitemap exclude
+  - scope:
+      path: "uploads/**/*"
+    values:
+      sitemap: false
 
 feed:
   path: /feed/index.xml
