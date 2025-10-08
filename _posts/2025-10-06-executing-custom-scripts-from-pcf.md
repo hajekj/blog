@@ -82,6 +82,57 @@ namespace Your.Namespace {
 }
 ```
 
+The code above will execute the script, but there's a catch. The limit for execution is 10 seconds, if the code runs longer, `executeFunction` will throw an error. So if you need to use this to collect some data from the user - for example via a dialog or have something long running, you will still need to resolve to a similar pattern with `Promise` and callbacks like with events.
+
+Something like this for the caller (you can make a nice wrapper for this):
+```typescript
+let outputParameter1: string;
+let promiseResolve: () => void;
+let promiseReject: (reason: any) => void;
+const promise = new Promise<void>((resolve, reject) => {
+    promiseResolve = resolve;
+    promiseReject = reject;
+});
+const result = await Xrm.Utility.executeFunction("webresource.js", "Your.Namespace.Class.Method", [
+    "<parameter_1>",
+    { parameter: 2 },
+    (outputParam1: string) => {
+        outputParameter1 = outputParam1;
+        promiseResolve();
+    },
+    (error: any) => {
+        promiseReject(error);
+    }
+]);
+try {
+    await promise();
+    console.log(outputParameter1);
+} catch (error) {
+    console.error(error);
+}
+```
+
+And this for the handler:
+```typescript
+namespace Your.Namespace {
+    export class Class {
+        static async Method(parameter1: string, parameter2: object, callback: (outputParam1: string) => void, reject: (error: any) => void): Promise<boolean> {
+            (async () => {
+                try {
+                    console.log(parameter1);
+                    const accounts = await Xrm.WebApi.retrieveMultiple("account", "?$top=1");
+                    callback(accounts[0]["name"]);
+                } catch (error) {
+                    reject(error);
+                }
+            })();
+ 
+            return true;
+        }
+    }
+}
+```
+
 This results in much cleaner and more readable code than using the wrappers for events. Have fun!
 
 > Remember that you can however only use `Xrm.*` methods in model-driven apps only, and it won't work in canvas or Power Pages.
