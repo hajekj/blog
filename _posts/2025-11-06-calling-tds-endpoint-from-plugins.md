@@ -58,6 +58,25 @@ var dataset = (System.Data.DataSet)response.Results["Records"];
 
 You don't need to perform any other authentication or create an app registration because it will use the calling user for authorization automatically, so it is much more convenient.
 
+This however **only works in a synchronous plugin**, if you set it to run as asynchronous, you will end up with a missing dependency exception:
+
+```
+System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: An unexpected error occurred. (Fault Detail is equal to Exception details: 
+ErrorCode: 0x80040216
+Message: An unexpected error occurred.
+TimeStamp: 2025-11-05T08:02:47.0000000Z
+OriginalException: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: An unexpected error occurred. (Fault Detail is equal to Exception details: 
+ErrorCode: 0x80040216
+Message: An unexpected error occurred.
+TimeStamp: 2025-11-05T08:02:47.6476346Z
+--
+Exception details: 
+ErrorCode: 0x80040216
+Message: System.IO.FileNotFoundException: Could not load file or assembly 'Microsoft.SqlServer.TransactSql.ScriptDom, Version=16.1.0.0, Culture=neutral, PublicKeyToken=[REDACTED] or one of its dependencies. The system cannot find the file specified.
+at Microsoft.Crm.ObjectModel.PSqlService.GetSqlQueryEvaluationVisitor(String queryText, IExecutionContext executionContext, PSqlDatabaseContext pSqlDatabaseContext)
+at Microsoft.Crm.ObjectModel.PSqlService.GetSqlExecutor(IExecutionContext executionContext, String queryText, PSqlDatabaseContext pSqlDatabaseContext...).
+```
+
 ### Calling from client
 
 If you want to call this from the client (eg. client-script or PCF) the easiest option is to wrap the above into a [Custom API](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/custom-api). This will also allow you to call it from Power Automate.
