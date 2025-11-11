@@ -77,7 +77,7 @@ at Microsoft.Crm.ObjectModel.PSqlService.GetSqlQueryEvaluationVisitor(String que
 at Microsoft.Crm.ObjectModel.PSqlService.GetSqlExecutor(IExecutionContext executionContext, String queryText, PSqlDatabaseContext pSqlDatabaseContext...).
 ```
 
-**UPDATE (11NOV2025):** You can also encounter this error if you are executing this on Retrieve for example, and the retrieve operation is triggered from an asynchronous context (for example Dataverse trigger's filter in Power Automate), because it will cause the code to run in the asynchronous sandbox. To mitigate the crash, make sure to check the [`IPluginExecutionContext`](https://learn.microsoft.com/en-us/dotnet/api/microsoft.xrm.sdk.ipluginexecutioncontext?view=dataverse-sdk-latest)'s Mode, and skip the execution when you detect asynchronous in any of the parent contexts (credits to Stepan Houdek for hitting this issue).
+**UPDATE (11NOV2025):** You can also encounter this error if you are executing this on Retrieve for example, and the retrieve operation is triggered from an asynchronous context (for example Dataverse trigger's filter in Power Automate), because it will cause the code to run in the asynchronous sandbox.
 
 ### Calling from client
 
