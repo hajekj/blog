@@ -125,4 +125,6 @@ Once you do that, you can copy paste it to the console in the developer tools an
 
 > **WARNING:** Remember, you are executing a code from the Internet, so always make sure it is going to do what you expect it to do.
 
+Once the intial export finishes, you can then [configure the audit log retention](https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing#turn-on-auditing) to a lower time in Dataverse and also [trigger the audit deletion](https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing#delete-audit-logs) if you want to delete older logs immediatelly (more on that in another article).
+
 And you are all set, audit is now persisted in much cheaper storage. I am kind of surprised that exporting audit to Data Lake directly without Azure Synapse Link is not supported, but at least it works this way.
