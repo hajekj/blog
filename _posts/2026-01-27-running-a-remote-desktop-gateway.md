@@ -19,9 +19,9 @@ I am a heavy user of Remote Desktop. I connect to my work computer from my MacBo
 In the past I have done many [Remote Desktop Service](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/overview) deployments, some of which are still running to date. The first requirement however is, I don't want to host a Windows Server. Second, I don't want to manage an Active Directory either (it is a [requirement](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-plan-build-anywhere)). Third, I preferably want to deploy this on my existing server and preferrably as a Docker container.
 
 So I started searching around and found out that there are a few (not really well known) implementations of the Remote Desktop Gateway and its protocol:
-* https://github.com/mKenfenheuer/rdpgw.net/ (C#, also has a [working sample](https://github.com/mKenfenheuer/ksol-rdpgw))
-* https://github.com/bolkedebruin/rdpgw (Go)
-* https://github.com/gabriel-sztejnworcel/pyrdgw (Python)
+* [https://github.com/mKenfenheuer/rdpgw.net/](https://github.com/mKenfenheuer/rdpgw.net/) (C#, also has a [working sample](https://github.com/mKenfenheuer/ksol-rdpgw))
+* [https://github.com/bolkedebruin/rdpgw](https://github.com/bolkedebruin/rdpgw) (Go)
+* [https://github.com/gabriel-sztejnworcel/pyrdgw](https://github.com/gabriel-sztejnworcel/pyrdgw) (Python)
 
 All of these libraries seem to implement it in a similar fashion, however I found the RDPGW in Go the most complete - it also ships as a Docker container, which you can just use - the only issue is that the documentation is somewhat not complete and some things are not really working - yet.
 
