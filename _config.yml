@@ -31,7 +31,7 @@ social:
   name: Jan Hajek
   links:
     - "https://hajekj.net"
-    - "https://twitter.com/hajekj"
+    - "https://x.com/hajekj"
     - "https://github.com/hajekj"
     - "https://www.linkedin.com/in/jahaj/"
 
@@ -42,7 +42,7 @@ theme: minimal-mistakes-jekyll
 permalink: /:year/:month/:day/:title/
 paginate: 10 # amount of posts to show
 paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Europe/Prague # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 words_per_minute: 140
 enable_copy_code_button: true
 
@@ -80,32 +80,32 @@ author:
     - label: "Blog"
       icon: "fas fa-fw fa-link"
       url: "https://hajekj.net"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/hajekj"
+    - label: "X"
+      icon: "fa-brands fa-x-twitter"
+      url: "https://x.com/hajekj"
     - label: "GitHub"
-      icon: "fab fa-fw fa-github"
+      icon: "fa-brands fa-fw fa-github"
       url: "https://github.com/hajekj"
     - label: "YouTube"
-      icon: "fab fa-fw fa-youtube"
+      icon: "fa-brands fa-fw fa-youtube"
       url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
     - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
+      icon: "fa-brands fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/jahaj/"
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/hajekj"
+    - label: "X"
+      icon: "fa-brands fa-x-twitter"
+      url: "https://x.com/hajekj"
     - label: "GitHub"
-      icon: "fab fa-fw fa-github"
+      icon: "fa-brands fa-fw fa-github"
       url: "https://github.com/hajekj"
     - label: "YouTube"
-      icon: "fab fa-fw fa-youtube"
+      icon: "fa-brands fa-fw fa-youtube"
       url: "https://www.youtube.com/channel/UCLy5DqU9JJh_rskmupohseA"
     - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
+      icon: "fa-brands fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/jahaj/"
 
 defaults:
@@ -129,7 +129,7 @@ defaults:
       author_profile: true
   # sitemap exclude
   - scope:
-      path: "uploads/**/*"
+      path: "uploads"
     values:
       sitemap: false
 
