@@ -32,7 +32,6 @@ social:
   links:
     - "https://hajekj.net"
     - "https://twitter.com/hajekj"
-    - "https://www.facebook.com/hajekj"
     - "https://github.com/hajekj"
     - "https://www.linkedin.com/in/jahaj/"
 
@@ -81,9 +80,6 @@ author:
     - label: "Blog"
       icon: "fas fa-fw fa-link"
       url: "https://hajekj.net"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook"
-      url: "https://fb.me/hajekj"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/hajekj"
@@ -99,9 +95,6 @@ author:
 
 footer:
   links:
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook"
-      url: "https://fb.me/hajekj"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/hajekj"
