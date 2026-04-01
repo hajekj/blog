@@ -23,7 +23,7 @@ For example, you can perform a query like this:
 SELECT contact = (SELECT COUNT(lastname) as count FROM contact), account = (SELECT COUNT(name) as count FROM account)
 ```
 
-Which will return a real-time count of the records (yes, even if it's above 5,000), do multiple nested `GROUP BY` statements and much more.
+Which will return a real-time count of the records (yes, even if it's above 50,000), do multiple nested `GROUP BY` statements and much more.
 
 ## Your options
 
